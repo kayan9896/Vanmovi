@@ -17,10 +17,10 @@ export default function Detail({route}) {
 },[])
   return (
     <View style={{alignItems:'center'}}>
-      <Text>{route.params.info.name}</Text>
+      <Text style={{margin:10,backgroundColor:'grey'}}>{route.params.info.name}</Text>
       
       <Input mvname={route.params.info.name}/>
-      <FlatList data={cms} renderItem={(i)=>{return <Text>{i.item.cm}</Text>}}/>
+      <FlatList data={cms} renderItem={(i)=>{return <Text style={{margin:10}}>{i.item.cm}</Text>}}/>
     </View>
   )
 }

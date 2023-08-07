@@ -5,10 +5,11 @@ import {add,remove} from '../firebase/util.js'
 export default function Input({mvname}) {
     const [text, setText] = React.useState('')
   return (
-    <View>
+    <View >
         <Text>Leave your comment</Text>
       <TextInput placeholder="Comment" onChangeText={function(tx){setText(tx)}}/>
-      <Pressable onPress={function(){
+      <Pressable style={{backgroundColor:'blue',alignItems:'center'}}
+      onPress={function(){
         add("comments",{cm:text,mv:mvname});
       }}><Text>Post</Text></Pressable>
     </View>
