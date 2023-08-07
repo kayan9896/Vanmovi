@@ -1,9 +1,9 @@
 import {db} from './setup.js';
 import { collection, addDoc,deleteDoc,doc,setDoc,updateDoc } from "firebase/firestore";
 
-async function add(item){
+async function add(colname,item){
     try{
-        const docRef = await addDoc(collection(db, "comments"), item);
+        const docRef = await addDoc(collection(db, colname), item);
         console.log("Document written with ID: ", docRef.id);
     }catch(e){
         console.log(e);
