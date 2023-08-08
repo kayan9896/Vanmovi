@@ -1,7 +1,9 @@
-import { View, Text, Pressable } from 'react-native'
+import { View, Text, Pressable,TextInput } from 'react-native'
 import React from 'react'
 
 export default function Login() {
+  const [email, setEmail] = React.useState('')
+  const [password, setPassword] = React.useState('')
     return (
         <View>
           <Text>Email</Text>

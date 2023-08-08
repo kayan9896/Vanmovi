@@ -10,6 +10,7 @@ export default function Input({mvname}) {
       <TextInput placeholder="Comment" onChangeText={function(tx){setText(tx)}}/>
       <Pressable style={{backgroundColor:'blue',alignItems:'center'}}
       onPress={function(){
+        
         add("comments",{cm:text,mv:mvname});
       }}><Text>Post</Text></Pressable>
     </View>
