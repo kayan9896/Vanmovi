@@ -6,7 +6,7 @@ export default function Input({mvname}) {
     const [text, setText] = React.useState('')
   return (
     <View >
-        <Text>Leave your comment</Text>
+      <Text>Leave your comment</Text>
       <TextInput placeholder="Comment" onChangeText={function(tx){setText(tx)}}/>
       <Pressable style={{backgroundColor:'blue',alignItems:'center'}}
       onPress={function(){
