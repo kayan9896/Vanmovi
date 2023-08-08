@@ -7,6 +7,7 @@ export default function Item({ info}) {
   return (
     <Pressable style={{margin:10}} onPress={function(){navigation.navigate('Detail',{info:info})}}>
       <Text>{info.name}</Text>
+      <Text>{info.overview}</Text>
     </Pressable>
   )
 }
