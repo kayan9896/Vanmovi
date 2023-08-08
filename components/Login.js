@@ -1,5 +1,6 @@
 import { View, Text, Pressable,TextInput } from 'react-native'
 import React from 'react'
+import { auth } from '../firebase/setup.js'
 
 export default function Login() {
   const [email, setEmail] = React.useState('')

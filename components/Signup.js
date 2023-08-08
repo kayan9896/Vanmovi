@@ -1,5 +1,7 @@
 import { View, Text, Pressable,TextInput } from 'react-native'
 import React from 'react'
+import { auth } from '../firebase/setup.js'
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 export default function Signup() {
   const [email, setEmail] = React.useState('')
@@ -27,7 +29,15 @@ export default function Signup() {
             value={confirmPassword}
             onChangeText={(newText) => setConfirmPassword(newText)}
           />
-          <Pressable><Text>Signup</Text></Pressable>
+          <Pressable onPress={function(){
+            async function signup(){
+              try{
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                console.log(userCredential);
+              }catch(e){console.log(e)}
+            }
+            signup();
+          }}><Text>Signup</Text></Pressable>
         </View>
       )
 }
