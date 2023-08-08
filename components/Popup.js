@@ -3,13 +3,12 @@ import React from 'react'
 import Signup from './Signup'
 import Login from './Login'
 
-export default function Popup({vis}) {
+export default function Popup({vis,changevis}) {
     const [isSignup, setIsSignup] = React.useState(true)
-    const [visible, setVisible] = React.useState(vis)
   return (
-    <Modal visible={visible} >
+    <Modal visible={vis} >
       <View style={{marginTop:40, alignItems:'center'}}>
-      <Pressable onPress={()=>{setVisible(false)}}><Text>close</Text></Pressable>
+      <Pressable onPress={()=>{changevis(false)}}><Text>close</Text></Pressable>
         <View style={{flexDirection:'row',borderColor:'grey',borderBottomWidth:2}}>
         <Pressable onPress={function(){setIsSignup(true)}} style={{margin:20}}><Text>Signup</Text></Pressable>
         <Pressable onPress={function(){setIsSignup(false)}} style={{margin:20}}><Text>Login</Text></Pressable>
