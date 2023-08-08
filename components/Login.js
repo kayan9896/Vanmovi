@@ -20,7 +20,14 @@ export default function Login() {
             value={password}
             onChangeText={(newText) => setPassword(newText)}
           />
-          <Pressable><Text>Login</Text></Pressable>
+          <Pressable onPress={function(){
+            async function login(){
+              try{
+              const userCredential = await signInWithEmailAndPassword(auth, email, password);
+              }catch(e){console.log(e)}
+            }
+            login();
+          }}><Text>Login</Text></Pressable>
         </View>
       )
 }
