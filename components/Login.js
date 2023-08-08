@@ -1,8 +1,9 @@
 import { View, Text, Pressable,TextInput } from 'react-native'
 import React from 'react'
 import { auth } from '../firebase/setup.js'
+import { signInWithEmailAndPassword } from "firebase/auth";
 
-export default function Login() {
+export default function Login({fail}) {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
     return (
@@ -24,9 +25,12 @@ export default function Login() {
             async function login(){
               try{
               const userCredential = await signInWithEmailAndPassword(auth, email, password);
-              }catch(e){console.log(e)}
+              alert('logged in successfully')
+              }catch(e){alert(e)}
             }
             login();
+            
+            fail(false);
           }}><Text>Login</Text></Pressable>
         </View>
       )

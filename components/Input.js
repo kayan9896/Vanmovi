@@ -8,11 +8,14 @@ export default function Input({mvname,loggedIn,changepop}) {
   return (
     <View style={{margin:20,padding:10,borderColor:'grey',borderBottomWidth:2}}>
       <Text>Leave your comment</Text>
-      <TextInput placeholder="Comment" onChangeText={function(tx){setText(tx)}}/>
+      <TextInput placeholder="Comment" onChangeText={function(tx){setText(tx)}}>{text}</TextInput>
       <Pressable style={{backgroundColor:'blue',alignItems:'center',marginHorizontal:60}}
       onPress={function(){
         if(loggedIn){
-          add("comments",{cm:text,mv:mvname,user:auth.currentUser.email});}
+          add("comments",{cm:text,mv:mvname,user:auth.currentUser.email});
+          setText('')
+          alert('comment added')
+        }
         else{
           changepop(true)
         }

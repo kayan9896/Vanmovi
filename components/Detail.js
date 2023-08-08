@@ -31,11 +31,11 @@ export default function Detail({route}) {
 },[])
   return (
     <View style={{alignItems:'stretch'}}>
-      <Popup vis={pop}/>
+      <Popup vis={pop} changevis={setPop}/>
       <View style={{margin:20,padding:10,borderColor:'grey',borderBottomWidth:2}}>
         <Text >{route.params.info.name}</Text>
       </View>
-      <Input mvname={route.params.info.name} loggedIn={loggedIn} changepop={function(){setPop}}/>
+      <Input mvname={route.params.info.name} loggedIn={loggedIn} changepop={setPop}/>
       <View>
         <Text style={{marginTop:10,alignSelf:'center'}}>Comments</Text>
         <FlatList data={cms} renderItem={(i)=>{return <Text style={{margin:10,alignSelf:'center'}}>{i.item.cm}</Text>}}/>
