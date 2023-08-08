@@ -1,4 +1,4 @@
-import { View, Text, Button, FlatList } from 'react-native'
+import { View, Text, Button, FlatList,ScrollView } from 'react-native'
 import React, { useEffect } from 'react'
 import Input from './Input'
 import { collection,onSnapshot,query, where } from 'firebase/firestore'
@@ -18,11 +18,16 @@ export default function Detail({route}) {
     return function(){dt()}
 },[])
   return (
-    <View style={{alignItems:'center'}}>
-      <Text style={{margin:10,backgroundColor:'grey'}}>{route.params.info.name}</Text>
-      <Popup vis={pop}/>
+    <View style={{alignItems:'stretch'}}>
+      <Popup vis={true}/>
+      <View style={{margin:20,padding:10,borderColor:'grey',borderBottomWidth:2}}>
+        <Text >{route.params.info.name}</Text>
+      </View>
       <Input mvname={route.params.info.name}/>
-      <FlatList data={cms} renderItem={(i)=>{return <Text style={{margin:10}}>{i.item.cm}</Text>}}/>
+      <View>
+        <Text style={{marginTop:10,alignSelf:'center'}}>Comments</Text>
+        <FlatList data={cms} renderItem={(i)=>{return <Text style={{margin:10,alignSelf:'center'}}>{i.item.cm}</Text>}}/>
+      </View>
     </View>
   )
 }
