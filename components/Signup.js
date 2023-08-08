@@ -3,7 +3,7 @@ import React from 'react'
 import { auth } from '../firebase/setup.js'
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
-export default function Signup() {
+export default function Signup({fail}) {
   const [email, setEmail] = React.useState('')
   const [password, setPassword] = React.useState('')
   const [confirmPassword, setConfirmPassword] = React.useState('')
@@ -33,10 +33,12 @@ export default function Signup() {
             async function signup(){
               try{
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                console.log(userCredential);
-              }catch(e){console.log(e)}
+                alert('signed up successfully')
+              }catch(e){alert(e)}
             }
             signup();
+            
+            fail(false);
           }}><Text>Signup</Text></Pressable>
         </View>
       )

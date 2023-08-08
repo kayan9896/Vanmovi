@@ -13,7 +13,7 @@ export default function Popup({vis,changevis}) {
         <Pressable onPress={function(){setIsSignup(true)}} style={{margin:20}}><Text>Signup</Text></Pressable>
         <Pressable onPress={function(){setIsSignup(false)}} style={{margin:20}}><Text>Login</Text></Pressable>
         </View>
-        {isSignup ? <Signup /> : <Login />}
+        {isSignup ? <Signup fail={changevis}/> : <Login fail={changevis}/>}
       </View>
     </Modal>
   )
