@@ -1,37 +1,66 @@
-import { View, Text, Pressable,TextInput } from 'react-native'
-import React from 'react'
-import { auth } from '../firebase/setup.js'
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native';
+import React from 'react';
+import { auth } from '../firebase/setup.js';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
-export default function Login({fail}) {
-  const [email, setEmail] = React.useState('')
-  const [password, setPassword] = React.useState('')
-    return (
-        <View>
-          <Text>Email</Text>
-          <TextInput
-            placeholder="Email"
-            value={email}
-            onChangeText={(newText) => setEmail(newText)}
-          />
-          <Text>Password</Text>
-          <TextInput
-            secureTextEntry={true}
-            placeholder="Password"
-            value={password}
-            onChangeText={(newText) => setPassword(newText)}
-          />
-          <Pressable onPress={function(){
-            async function login(){
-              try{
-              const userCredential = await signInWithEmailAndPassword(auth, email, password);
-              alert('logged in successfully')
-              }catch(e){alert(e)}
-            }
-            login();
-            
-            fail(false);
-          }}><Text>Login</Text></Pressable>
-        </View>
-      )
+export default function Login({ fail }) {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  return (
+    <View style={styles.container}>
+      <Text style={styles.label}>Email</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={(newText) => setEmail(newText)}
+      />
+      <Text style={styles.label}>Password</Text>
+      <TextInput
+        style={styles.input}
+        secureTextEntry={true}
+        placeholder="Confirm Password"
+        value={password}
+        onChangeText={(newText) => setPassword(newText)}
+      />
+      <Pressable style={styles.button} onPress={function () {
+        async function login() {
+          try {
+            const userCredential = await signInWithEmailAndPassword(auth, email, password);
+            alert('logged in successfully');
+          } catch (e) { alert(e); }
+        }
+        login();
+        fail(false);
+      }}>
+        <Text style={styles.buttonText}>Login</Text>
+      </Pressable>
+    </View>
+  );
 }
+
+const styles = StyleSheet.create({
+  container: {
+    padding: 20,
+  },
+  label: {
+    marginBottom: 5,
+    fontSize: 16,
+  },
+  input: {
+    borderColor: 'grey',
+    borderWidth: 1,
+    padding: 10,
+    marginBottom: 20,
+    borderRadius: 5,
+  },
+  button: {
+    backgroundColor: 'blue',
+    padding: 10,
+    alignItems: 'center',
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: 'white',
+  },
+});
