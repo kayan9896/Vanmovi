@@ -6,6 +6,7 @@ import { db } from '../firebase/setup.js'
 import Popup from './Popup.js'
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase/setup.js';
+import HeaderLeft from '../components/HeaderLeft';
 
 export default function Detail({ route }) {
   const [cms, setCms] = React.useState([])
@@ -28,6 +29,9 @@ export default function Detail({ route }) {
 
   return (
     <View style={styles.container}>
+      <>
+        <HeaderLeft title ="Detail" />
+      </>
       <Popup vis={pop} changevis={setPop} />
       <FlatList
         data={cms}

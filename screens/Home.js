@@ -2,6 +2,7 @@ import { View, Text, FlatList, StyleSheet } from 'react-native';
 import React, { useEffect } from 'react';
 import Item from '../components/Item';
 
+
 export default function Home() {
   const [data, setData] = React.useState([]);
   const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1';//Just for test, need to modify later

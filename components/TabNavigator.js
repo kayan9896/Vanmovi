@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Home from '../screens/Home';
 import Cinema from '../screens/Cinema';
+import HeaderRight from '../components/HeaderRight';
 
 const Tab = createBottomTabNavigator();
 
@@ -22,7 +23,7 @@ const TabNavigator = () => (
             tabBarInactiveTintColor: 'white',
             tabBarStyle: [{ 
               display: 'flex', 
-              backgroundColor: '#00bfff',
+              backgroundColor: 'deepskyblue',
               height: 60
             }]
         })}
