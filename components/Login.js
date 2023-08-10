@@ -19,7 +19,7 @@ export default function Login({ fail }) {
       <TextInput
         style={styles.input}
         secureTextEntry={true}
-        placeholder="Confirm Password"
+        placeholder="Password"
         value={password}
         onChangeText={(newText) => setPassword(newText)}
       />
@@ -28,7 +28,7 @@ export default function Login({ fail }) {
           try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             alert('logged in successfully');
-          } catch (e) { alert(e); }
+          } catch (e) { alert('Fail to login'); }
         }
         login();
         fail(false);

@@ -29,9 +29,9 @@ async function remove(colname,id){
     }
 }
 
-async function update(id){
+async function update(colname,id){
     try{
-        const docRef=await updateDoc(doc(db,"cal",id))
+        const docRef=await updateDoc(doc(db,colname,id))
     }
     catch(e){
         console.log(e)
