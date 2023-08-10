@@ -4,6 +4,8 @@ import Home from './screens/Home';
 import Cinema from './screens/Cinema';
 import Detail from './components/Detail';
 import Profile from './components/Profile';
+import TabNavigator from './components/TabNavigator';
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { onAuthStateChanged, signOut } from "firebase/auth";
@@ -25,20 +27,18 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={Home} options={function({navigation}){
-          return{headerRight: function(){
-              return<Pressable onPress={function(){
+        <Stack.Screen name="Home" component={TabNavigator} options={function({navigation}){
+          return {headerRight: function(){
+              return <Pressable onPress={function(){
                 navigation.navigate('Profile')}
               }><Text>Profile</Text></Pressable>
             }
           }
         }}/>
-        <Stack.Screen name="Cinema" component={Cinema}/>
         <Stack.Screen name="Detail" component={Detail}/>
         <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
     </NavigationContainer>
-
   );
 }
 
