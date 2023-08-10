@@ -47,10 +47,10 @@ const styles = StyleSheet.create({
   },
   activeButton: {
     borderBottomWidth: 3,
-    borderBottomColor: 'blue',
+    borderBottomColor: 'dodgerblue',
   },
   activeText: {
-    color: 'blue',
+    color: 'dodgerblue',
   },
   inactiveText: {
     color: 'grey',
