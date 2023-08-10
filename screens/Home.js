@@ -1,9 +1,10 @@
 import { View, Text, FlatList, StyleSheet } from 'react-native';
 import React, { useEffect } from 'react';
 import Item from '../components/Item';
+import HeaderRight from '../components/HeaderRight';
 
 
-export default function Home() {
+export default function Home({ navigation }) {
   const [data, setData] = React.useState([]);
   const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1';//Just for test, need to modify later
   const genresMap = new Map(); 
@@ -55,6 +56,7 @@ export default function Home() {
 
   return (
     <View style={styles.container}>
+      <HeaderRight title="Movie" navigation={navigation} />
       <Text style={styles.title}>What's new!</Text>
       <FlatList data={data} renderItem={(i) => { return <Item info={i.item} /> }} />
     </View>
