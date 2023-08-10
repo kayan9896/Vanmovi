@@ -1,5 +1,5 @@
 import {db} from './setup.js';
-import { collection, addDoc,deleteDoc,doc,setDoc,updateDoc } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, getDoc, updateDoc, doc } from "firebase/firestore";
 
 async function add(colname,item){
     try{
@@ -9,6 +9,17 @@ async function add(colname,item){
         console.log(e);
     }
 }
+
+async function get(id){
+    try{
+        const docRef=await getDoc(doc(db,"cal",id))
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+
 async function remove(id){
     try{
         const docRef=await deleteDoc(doc(db,"cal",id))
@@ -18,4 +29,13 @@ async function remove(id){
     }
 }
 
-export {add,remove}
+async function update(id){
+    try{
+        const docRef=await updateDoc(doc(db,"cal",id))
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export {add, remove, update, get}
