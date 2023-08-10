@@ -56,7 +56,7 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <HeaderRight title="Movie" navigation={navigation} />
+      <HeaderRight title="Movies" navigation={navigation} />
       <Text style={styles.title}>What's new!</Text>
       <FlatList data={data} renderItem={(i) => { return <Item info={i.item} /> }} />
     </View>

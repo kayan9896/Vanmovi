@@ -8,6 +8,7 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase/setup.js';
 import HeaderLeft from '../components/HeaderLeft';
 
+
 export default function Detail({ route }) {
   const [cms, setCms] = React.useState([])
   const [pop, setPop] = React.useState(false)
