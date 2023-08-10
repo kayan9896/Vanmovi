@@ -1,4 +1,4 @@
-import { View, Text,FlatList } from 'react-native';
+import { View, Text,FlatList,StyleSheet } from 'react-native';
 import React,{useEffect} from 'react';
 import HeaderRight from '../components/HeaderRight';
 
@@ -17,7 +17,56 @@ export default function Cinema({ navigation }) {
   return (
     <View>
       <HeaderRight title="Cinemas" navigation={navigation} />
-      <FlatList data={cinemas} renderItem={function({item}){return<Text>{item.name} in {item.city}</Text>}}/>
+      <FlatList data={cinemas} renderItem={function({item}){return<CinemaItem i={item}/>}}/>
     </View>
   )
 }
+
+const CinemaItem = ({ i }) => (
+  <View style={styles.commentText}>
+    <Text>{i.name} in {i.city}</Text>
+    <Text>{i.address}</Text>
+  </View>
+  
+);
+
+const styles = StyleSheet.create({
+  container: {
+    backgroundColor: '#f0f0f0',
+  },
+  poster: {
+    width: '100%',
+    height: 300,
+  },
+  details: {
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  title: {
+    fontSize: 28,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  overview: {
+    fontSize: 16,
+    color: '#555',
+    marginBottom: 20,
+  },
+  comments: {
+    padding: 20,
+    backgroundColor: '#fff',
+  },
+  commentsTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  commentText: {
+    fontSize: 16,
+    color: '#444',
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: 'rgba(0,0,0,0.05)',
+    borderRadius: 5,
+  },
+})
