@@ -10,9 +10,9 @@ async function add(colname,item){
     }
 }
 
-async function get(id){
+async function get(colname){
     try{
-        const docRef=await getDoc(doc(db,"cal",id))
+        const docRef=await getDoc(doc(db,colname,id))
     }
     catch(e){
         console.log(e)
@@ -20,9 +20,9 @@ async function get(id){
 }
 
 
-async function remove(id){
+async function remove(colname,id){
     try{
-        const docRef=await deleteDoc(doc(db,"cal",id))
+        const docRef=await deleteDoc(doc(db,colname,id))
     }
     catch(e){
         console.log(e)
