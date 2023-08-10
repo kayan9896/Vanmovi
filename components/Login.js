@@ -33,7 +33,7 @@ export default function Login({ fail }) {
         login();
         fail(false);
       }}>
-        <Text style={styles.buttonText}>Login</Text>
+        <Text style={styles.buttonText}>Log In</Text>
       </Pressable>
     </View>
   );
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: 'dodgerblue',
     padding: 10,
     alignItems: 'center',
     borderRadius: 5,

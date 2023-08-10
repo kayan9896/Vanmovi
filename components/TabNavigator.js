@@ -12,7 +12,7 @@ const TabNavigator = () => (
             tabBarIcon: ({ focused, color, size }) => {
                 let iconName;
                 if (route.name === 'Movies') {
-                    iconName = focused ? 'movie-edit' : 'movie-filter-outline';
+                    iconName = focused ? 'movie-filter' : 'movie-filter-outline';
                 } else if (route.name === 'Cinemas') {
                     iconName = focused ? 'map-marker-account' : 'map-marker-account-outline';
                 }

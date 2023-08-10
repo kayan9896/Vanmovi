@@ -19,12 +19,14 @@ export default function Input({ mvname, loggedIn, changepop }) {
       </TextInput>
       <Pressable
         style={{
-          backgroundColor: 'blue',
+          backgroundColor: 'dodgerblue',
           alignItems: 'center',
           marginHorizontal: 60,
           paddingVertical: 10, 
           borderRadius: 5, 
           marginTop: 10, 
+          width: '30%',
+          alignSelf: 'center',
         }}
         onPress={function () {
           if (loggedIn) {

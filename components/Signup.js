@@ -42,7 +42,7 @@ export default function Signup({ fail }) {
         signup();
         fail(false);
       }}>
-        <Text style={styles.buttonText}>Signup</Text>
+        <Text style={styles.buttonText}>Sign Up</Text>
       </Pressable>
     </View>
   );
@@ -64,7 +64,7 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
-    backgroundColor: 'blue',
+    backgroundColor: 'dodgerblue',
     padding: 10,
     alignItems: 'center',
     borderRadius: 5,
