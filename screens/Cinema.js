@@ -6,7 +6,7 @@ import HeaderRight from '../components/HeaderRight';
 export default function Cinema({ navigation }) {
   return (
     <View>
-      <HeaderRight title="Cinema" navigation={navigation} />
+      <HeaderRight title="Cinemas" navigation={navigation} />
     </View>
   )
 }

@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import Popup from '../components/Popup';
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase/setup.js';
+import HeaderLeft from '../components/HeaderLeft';
+
 
 export default function Profile() {
   const [loggedIn, setLoggedIn] = React.useState(auth.currentUser);
@@ -19,6 +21,9 @@ export default function Profile() {
   if (!loggedIn) {
     return (
       <View style={styles.container}>
+        <>
+          <HeaderLeft title ="Detail" />
+        </>
         <Popup vis={pop} changevis={setPop} />
         <Text>You are not logged in</Text>
         <Pressable style={styles.button} onPress={function () { setPop(true); }}>
@@ -29,6 +34,9 @@ export default function Profile() {
   } else {
     return (
       <View style={styles.container}>
+        <>
+          <HeaderLeft title ="Detail" />
+        </>
         <Text>{auth.currentUser.email}</Text>
         <Pressable style={styles.button} onPress={function () { signOut(auth); }}>
           <Text style={styles.buttonText}>Sign Out</Text>

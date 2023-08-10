@@ -27,8 +27,7 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Home" component={TabNavigator} options={function({navigation}){
-        }}/>
+        <Stack.Screen name="VanMovie" component={TabNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="Detail" component={Detail}/>
         <Stack.Screen name="Profile" component={Profile} />
       </Stack.Navigator>
