@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { Button } from 'react-native';
+import { Pressable, StyleSheet, Text, View } from 'react-native';
 
 const HeaderRight = ({ title, navigation }) => {
 
@@ -19,6 +20,11 @@ const HeaderRight = ({ title, navigation }) => {
           onPress={() => navigation.navigate('Profile')}
         />
       ),
+      // headerRight: function(){
+      //   return <Pressable onPress={function(){
+      //     navigation.navigate('Profile')}
+      //   }><Text>Profile</Text></Pressable>
+      // }
     });
   }, [navigation]);
 

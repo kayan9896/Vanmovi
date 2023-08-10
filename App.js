@@ -28,12 +28,6 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen name="Home" component={TabNavigator} options={function({navigation}){
-          return {headerRight: function(){
-              return <Pressable onPress={function(){
-                navigation.navigate('Profile')}
-              }><Text>Profile</Text></Pressable>
-            }
-          }
         }}/>
         <Stack.Screen name="Detail" component={Detail}/>
         <Stack.Screen name="Profile" component={Profile} />

@@ -9,7 +9,7 @@ export default function Popup({ vis, changevis }) {
     <Modal visible={vis} >
       <View style={styles.container}>
         <Pressable onPress={() => { changevis(false); }} style={styles.closeButton}>
-          <Text>close</Text>
+          <Text>X close</Text>
         </Pressable>
         <View style={styles.buttonContainer}>
           <Pressable onPress={function () { setIsSignup(true); }} style={[styles.button, isSignup && styles.activeButton]}>
