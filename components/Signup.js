@@ -73,13 +73,22 @@ export default function Signup({ fail }) {
       <Pressable
         style={styles.button}
         onPress={function () {
-          if (validateEmail() && validatePhoneNumber()) {
+          if (password !== confirmPassword) {
+            alert('Passwords do not match');
+          }
+          if(!validateEmail()){
+            alert('Invalid Email');
+          }
+          if(!validatePhoneNumber()){
+            alert('Invalid Phone Number');
+          }
+          if (validateEmail() && validatePhoneNumber()&& password === confirmPassword) {
             async function signup() {
               try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 alert('signed up successfully');
               } catch (e) {
-                alert(e);
+                alert('Fail to sign up');
               }
             }
             signup();
