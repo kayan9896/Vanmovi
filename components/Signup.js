@@ -7,6 +7,31 @@ export default function Signup({ fail }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
+  const [phoneNumber, setPhoneNumber] = React.useState('');
+  const [emailError, setEmailError] = React.useState('');
+  const [phoneNumberError, setPhoneNumberError] = React.useState('');
+
+  const validateEmail = () => {
+    let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
+    if (reg.test(email) === true) {
+      setEmailError('');
+      return true;
+    } else {
+      setEmailError('Invalid Email');
+      return false;
+    }
+  };
+
+  const validatePhoneNumber = () => {
+    if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
+      setPhoneNumberError('Invalid Phone Number');
+      return false;
+    } else {
+      setPhoneNumberError('');
+      return true;
+    }
+  };
+
   return (
     <View style={styles.container}>
       <Text style={styles.label}>Email</Text>
@@ -15,7 +40,20 @@ export default function Signup({ fail }) {
         placeholder="Email"
         value={email}
         onChangeText={(newText) => setEmail(newText)}
+        onBlur={validateEmail}
       />
+      <Text style={{ color: 'red' }}>{emailError}</Text>
+
+      <Text style={styles.label}>Phone Number</Text>
+      <TextInput
+        style={styles.input}
+        placeholder="Phone Number"
+        value={phoneNumber}
+        onChangeText={(newText) => setPhoneNumber(newText)}
+        onBlur={validatePhoneNumber}
+      />
+      <Text style={{ color: 'red' }}>{phoneNumberError}</Text>
+
       <Text style={styles.label}>Password</Text>
       <TextInput
         style={styles.input}
@@ -32,16 +70,23 @@ export default function Signup({ fail }) {
         value={confirmPassword}
         onChangeText={(newText) => setConfirmPassword(newText)}
       />
-      <Pressable style={styles.button} onPress={function () {
-        async function signup() {
-          try {
-            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-            alert('signed up successfully');
-          } catch (e) { alert(e); }
-        }
-        signup();
-        fail(false);
-      }}>
+      <Pressable
+        style={styles.button}
+        onPress={function () {
+          if (validateEmail() && validatePhoneNumber()) {
+            async function signup() {
+              try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                alert('signed up successfully');
+              } catch (e) {
+                alert(e);
+              }
+            }
+            signup();
+            fail(false);
+          }
+        }}
+      >
         <Text style={styles.buttonText}>Sign Up</Text>
       </Pressable>
     </View>
