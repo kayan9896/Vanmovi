@@ -1,4 +1,4 @@
-import { View, Text,FlatList,StyleSheet } from 'react-native';
+import { View, Text,FlatList,StyleSheet,Image } from 'react-native';
 import React,{useEffect} from 'react';
 import HeaderRight from '../components/HeaderRight';
 import MapView,{Marker} from 'react-native-maps'
@@ -34,7 +34,10 @@ export default function Cinema({ navigation }) {
     <View style={{flex:1}}>
       <HeaderRight title="Cinemas" navigation={navigation} />
       {loc&&<MapView style={{width:400,height:300}} initialRegion={{latitude:loc.latitude,longitude:loc.longitude,latitudeDelta:0.0922,longitudeDelta:0.0421}}>
-        <Marker coordinate={{latitude:loc.latitude,longitude:loc.longitude}} title="You are here" pinColor='black'/>
+        <Marker coordinate={{latitude:loc.latitude,longitude:loc.longitude}} title="You are here" >
+          <Image source={require('../images/star.png')} style={{width:25,height:25}}/>
+          <Text>You</Text>
+        </Marker>
         {cinemas.map((c)=>{return <Marker key={c.name} coordinate={{latitude:c.latitude,longitude:c.longitude}} title={c.name} description={c.address}/>})}
       </MapView>}
       <FlatList data={cinemas} renderItem={function({item}){return<CinemaItem i={item}/>}}/>
