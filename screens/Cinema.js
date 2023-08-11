@@ -1,22 +1,42 @@
 import { View, Text,FlatList,StyleSheet } from 'react-native';
 import React,{useEffect} from 'react';
 import HeaderRight from '../components/HeaderRight';
-
+import MapView,{Marker} from 'react-native-maps'
+import * as Location from 'expo-location';
 
 export default function Cinema({ navigation }) {
   const [cinemas, setCinemas] = React.useState([]);
+  const [loc, setLoc] = React.useState(null);
+  async function valid() {
+    const status = await Location.requestForegroundPermissionsAsync();
+    return status==='granted'
+  }
   useEffect(function () {
     async function getCinemas() {
-      const response = await fetch('https://www.cineplex.com/api/v1/theatres?language=en-us&range=100&skip=0&take=1000')
+      const response = await fetch('https://www.cineplex.com/api/v1/theatres?language=en-us&range=25&skip=0&take=1000')
       const json = await response.json()
-      const puredt = json.data.map((c)=>{return {name:c.name,address:c.address1,city:c.city}})
+      const puredt = json.data.map((c)=>{return {name:c.name,address:c.address1,city:c.city,latitude:c.latitude,longitude:c.longitude}})
       setCinemas(puredt)
     }
     getCinemas()
   },[])
+  useEffect(function () {
+    async function getLoc() {
+      const pm = await valid()
+      
+        const location = await Location.getCurrentPositionAsync({});
+        setLoc(location.coords)
+      
+    }
+    getLoc()
+  },[Location])
   return (
-    <View>
+    <View style={{flex:1}}>
       <HeaderRight title="Cinemas" navigation={navigation} />
+      {loc&&<MapView style={{width:400,height:300}} initialRegion={{latitude:loc.latitude,longitude:loc.longitude,latitudeDelta:0.0922,longitudeDelta:0.0421}}>
+        <Marker coordinate={{latitude:loc.latitude,longitude:loc.longitude}} title="You are here" pinColor='black'/>
+        {cinemas.map((c)=>{return <Marker key={c.name} coordinate={{latitude:c.latitude,longitude:c.longitude}} title={c.name} description={c.address}/>})}
+      </MapView>}
       <FlatList data={cinemas} renderItem={function({item}){return<CinemaItem i={item}/>}}/>
     </View>
   )
