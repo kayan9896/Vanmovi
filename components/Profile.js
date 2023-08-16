@@ -111,27 +111,27 @@ export default function Profile() {
   return (
     <View style={styles.container}>
       <HeaderLeft title="Detail" />
-      <Text>{auth.currentUser.email}</Text>
+      <Text style={styles.emailText}>{auth.currentUser.email}</Text>
 
       {imageUri ? (
         <>
           <Image source={{ uri: imageUri }} style={{ width: 100, height: 100, alignSelf: 'center' }} />
 
           <View style={styles.buttonRow}>
-            <View style={styles.editDeleteButton}>
-              <Button title="Edit" onPress={pickImage} />
-            </View>
-            <View style={styles.editDeleteButton}>
-              <Button title="Delete" onPress={deleteImage} />
-            </View>
+            <Pressable style={styles.editDeleteButton} onPress={pickImage}>
+              <Text style={styles.buttonText}>Edit</Text>
+            </Pressable>
+            <Pressable style={styles.editDeleteButton} onPress={deleteImage}>
+              <Text style={styles.buttonText}>Delete</Text>
+            </Pressable>
           </View>
         </>
       ) : (
         <>
           <MaterialIcons name="portrait" size={100} color="deepskyblue" style={{ alignSelf: 'center' }} />
-          <View style={styles.addPortraitButton}>
-            <Button title="Add Portrait" onPress={pickImage} />
-          </View>
+          <Pressable style={styles.addPortraitButton} onPress={pickImage}>
+            <Text style={styles.buttonText}>Add Portrait</Text>
+          </Pressable>
         </>
       )}
 
@@ -184,6 +184,11 @@ const styles = StyleSheet.create({
     width: '30%',
     marginTop: 20,
     marginHorizontal: 15,
+    backgroundColor: '#888', 
+    padding: 10,
+    borderRadius: 25,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonRow: {
     flexDirection: 'row',
@@ -194,7 +199,16 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginTop: 30,
     marginBottom: 10,
-    fontSize: 16,
-    color: 'gray',
+    fontSize: 18, 
+    fontWeight: 'bold', 
+    color: '#333', 
   },
+  emailText: {
+    alignSelf: 'center',
+    marginTop: 20,
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#555',
+  }
 });
+
