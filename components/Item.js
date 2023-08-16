@@ -1,6 +1,9 @@
 import React from 'react';
 import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import calendar from '../images/calendar.png';
+import genre from '../images/genre.png';  
+import time from '../images/time.png'; 
 
 export default function Item({ info }) {
   const navigation = useNavigation();
@@ -13,9 +16,22 @@ export default function Item({ info }) {
       />
       <View style={styles.details}>
         <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">{info.name}</Text>
-        <Text style={styles.releaseDate}>Release Year: {info.release_date && new Date(info.release_date).getFullYear()}</Text>
-        <Text style={styles.genres} numberOfLines={1} ellipsizeMode="tail">Genres: {info.genres}</Text>
-        <Text style={styles.runtime}>Runtime: {Math.floor(info.runtime / 60)}h {info.runtime % 60}m</Text>
+
+        <View style={styles.row}>
+          <Image source={calendar} style={styles.icon} />
+          <Text style={styles.releaseDate}>Release Year: {info.release_date && new Date(info.release_date).getFullYear()}</Text>
+        </View>
+
+        <View style={styles.row}>
+          <Image source={genre} style={styles.icon} />
+          <Text style={styles.genres} numberOfLines={1} ellipsizeMode="tail">Genres: {info.genres}</Text>
+        </View>
+
+        <View style={styles.row}>
+          <Image source={time} style={styles.icon} />
+          <Text style={styles.runtime}>Runtime: {Math.floor(info.runtime / 60)}h {info.runtime % 60}m</Text>
+        </View>
+
         <Text style={styles.overview} numberOfLines={3} ellipsizeMode="tail">Overview: {info.overview}</Text>
       </View>
     </Pressable>
@@ -64,5 +80,14 @@ const styles = StyleSheet.create({
     color: '#555',
     fontSize: 14,
     marginTop: 5,
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  icon: {
+    width: 16,
+    height: 16,
+    marginRight: 5,
   },
 });
