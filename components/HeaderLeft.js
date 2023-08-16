@@ -17,13 +17,13 @@ const HeaderLeft = ({ title }) => {
       headerTitleAlign: 'center',
       headerLeft: () => (
         <Button
-          title="<-"
+          title="←Back"
           onPress={() => navigation.goBack()}
         />
       ),
       headerRightContainerStyle: {
         marginRight: 10,
-    },
+      },
     });
   }, [navigation]);
 
