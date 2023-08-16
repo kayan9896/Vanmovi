@@ -1,11 +1,8 @@
 import { View } from 'react-native';
 import React, { useEffect } from 'react';
 import * as Notifications from "expo-notifications";
-import * as BackgroundFetch from 'expo-background-fetch';
-import * as TaskManager from 'expo-task-manager';
 
-const TASK_NAME = 'BACKGROUND_NOTIFICATION_TASK';
-const FRIDAY = 5;
+const WEDNESDAY = 3;
 
 Notifications.setNotificationHandler({
     handleNotification: async () => ({
@@ -13,24 +10,6 @@ Notifications.setNotificationHandler({
         shouldPlaySound: true,
         shouldSetBadge: true
     })
-});
-
-TaskManager.defineTask(TASK_NAME, () => {
-    try {
-        if (new Date().getDay() === FRIDAY) {
-            Notifications.scheduleNotificationAsync({
-                content: {
-                    title: 'New trending movies!',
-                    body: 'Click on and check!'
-                },
-                trigger: null
-            });
-        }
-
-        return BackgroundFetch.Result.NewData;
-    } catch (err) {
-        return BackgroundFetch.Result.Failed;
-    }
 });
 
 export default function MovieNotification() {
@@ -46,11 +25,29 @@ export default function MovieNotification() {
     useEffect(() => {
         (async () => {
             if (await validPermit()) {
-                await BackgroundFetch.registerTaskAsync(TASK_NAME, {
-                    minimumInterval: 24 * 60 * 60,
-                    stopOnTerminate: false,
-                    startOnBoot: true,
-                });
+                const today = new Date();
+
+                if (today.getDay() === WEDNESDAY) {
+                    const targetTime = new Date();
+                    targetTime.setHours(15, 30, 0, 0);
+
+                    if (today.getTime() < targetTime.getTime()) {
+                        await Notifications.scheduleNotificationAsync({
+                            content: {
+                                title: 'New trending movies!',
+                                body: 'Click on and check!'
+                            },
+                            trigger: {
+                                year: today.getFullYear(),
+                                month: today.getMonth(),
+                                day: today.getDate(),
+                                hour: 14,
+                                minute: 55,
+                                second: 0
+                            }
+                        });
+                    }
+                }
             }
         })();
     }, []);
