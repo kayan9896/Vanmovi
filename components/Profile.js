@@ -6,11 +6,24 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase/setup.js';
 import HeaderLeft from '../components/HeaderLeft';
 import CommentinPro from './CommentinPro';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Profile() {
   const [loggedIn, setLoggedIn] = useState(auth.currentUser);
   const [imageUri, setImageUri] = useState(null);
   
+  const fetchImageUri = async () => {
+    try {
+      const savedUri = await AsyncStorage.getItem('@saved_image');
+      if (savedUri !== null) {
+        setImageUri(savedUri);
+      }
+    } catch (e) {
+      console.error("Failed to fetch image URI:", e);
+    }
+  };
+
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       if (user) {
@@ -19,8 +32,18 @@ export default function Profile() {
         setLoggedIn(false);
       }
     });
+    fetchImageUri();
   }, []);
   
+
+  const saveImageUri = async (uri) => {
+    try {
+      await AsyncStorage.setItem('@saved_image', uri);
+    } catch (e) {
+      console.error("Failed to save image URI:", e);
+    }
+  };
+
   const pickImage = async () => {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
@@ -37,6 +60,7 @@ export default function Profile() {
   
       if (!result.canceled && result.assets && result.assets.length > 0) {
         setImageUri(result.assets[0].uri);
+        saveImageUri(result.assets[0].uri);
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -44,9 +68,15 @@ export default function Profile() {
   };
   
 
-  const deleteImage = () => {
+  const deleteImage = async () => {
     setImageUri(null);
+    try {
+      await AsyncStorage.removeItem('@saved_image');
+    } catch (e) {
+      console.error("Failed to delete image URI:", e);
+    }
   };
+  
 
   if (!loggedIn) {
     return (
