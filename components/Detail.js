@@ -1,18 +1,17 @@
-import { View, Text, Image, ScrollView, StyleSheet, FlatList } from 'react-native'
-import React, { useEffect } from 'react'
-import Input from './Input'
-import { collection, onSnapshot, query, where } from 'firebase/firestore'
-import { db } from '../firebase/setup.js'
-import Popup from './Popup.js'
+import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
+import React, { useEffect } from 'react';
+import Input from './Input';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
+import { db } from '../firebase/setup.js';
+import Popup from './Popup.js';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase/setup.js';
 import HeaderLeft from '../components/HeaderLeft';
 
-
 export default function Detail({ route }) {
-  const [cms, setCms] = React.useState([])
-  const [pop, setPop] = React.useState(false)
-  const [loggedIn, setLoggedIn] = React.useState(false)
+  const [cms, setCms] = React.useState([]);
+  const [pop, setPop] = React.useState(false);
+  const [loggedIn, setLoggedIn] = React.useState(false);
 
   useEffect(() => {
     onAuthStateChanged(auth, user => {
@@ -25,14 +24,12 @@ export default function Detail({ route }) {
       const puredt = q.empty ? [] : q.docs.map(doc => doc.data());
       setCms(puredt);
     });
-    return () => { dt() };
+    return () => { dt(); };
   }, []);
 
   return (
     <View style={styles.container}>
-      <>
-        <HeaderLeft title ="Detail" />
-      </>
+      <HeaderLeft title="Detail" />
       <Popup vis={pop} changevis={setPop} />
       <FlatList
         data={cms}
@@ -59,16 +56,19 @@ export default function Detail({ route }) {
 
 const CommentSection = () => (
   <View style={styles.comments}>
-    <Text style={styles.commentsTitle}>Comments:</Text>
+    <Text style={styles.commentsTitle}>Comments</Text>
   </View>
 );
 
 const CommentItem = ({ comment }) => (
-  <Text style={styles.commentText}>{comment}</Text>
+  <View style={styles.commentContainer}>
+    <Text style={styles.commentText}>{comment}</Text>
+  </View>
 );
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
     backgroundColor: '#f0f0f0',
   },
   poster: {
@@ -83,11 +83,13 @@ const styles = StyleSheet.create({
     fontSize: 28,
     fontWeight: 'bold',
     marginBottom: 10,
+    color: '#333',
   },
   overview: {
     fontSize: 16,
-    color: '#555',
+    color: '#666',
     marginBottom: 20,
+    lineHeight: 22,
   },
   comments: {
     padding: 20,
@@ -96,14 +98,17 @@ const styles = StyleSheet.create({
   commentsTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginBottom: 15,
+    color: '#444',
+  },
+  commentContainer: {
+    marginBottom: 12, 
+    backgroundColor: 'rgba(0,0,0,0.03)',  
+    borderRadius: 5,
+    padding: 10,
   },
   commentText: {
     fontSize: 16,
     color: '#444',
-    marginBottom: 10,
-    padding: 10,
-    backgroundColor: 'rgba(0,0,0,0.05)',
-    borderRadius: 5,
   },
 });
