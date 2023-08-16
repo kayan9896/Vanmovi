@@ -81,8 +81,7 @@ export default function Profile() {
   if (!loggedIn) {
     return (
       <View style={styles.container}>
-        <HeaderLeft title="Detail" />
-        <Text>You are not logged in</Text>
+        <HeaderLeft title="Profile" />
         
         <Text style={styles.infoText}>Are you an existing user?</Text>
         <Pressable style={styles.button} onPress={() => { setShowLoginModal(true); }}>
