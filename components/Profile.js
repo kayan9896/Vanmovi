@@ -9,6 +9,7 @@ import CommentinPro from './CommentinPro';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Login from '../components/Login';
 import Signup from '../components/Signup';
+import Notification from './Notification.js';
 
 export default function Profile() {
   const [loggedIn, setLoggedIn] = useState(auth.currentUser);
@@ -129,6 +130,7 @@ export default function Profile() {
         <Pressable style={styles.button} onPress={() => { signOut(auth); }}>
           <Text style={styles.buttonText}>Sign Out</Text>
         </Pressable>
+        <Notification />
       </View>
     );
   }
