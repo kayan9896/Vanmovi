@@ -117,14 +117,13 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   editDeleteButton: {
-    width: '30%',
-    alignSelf: 'center',
+    width: '20%',
     marginTop: 10,
+    marginHorizontal: 10,
   },
-
   buttonRow: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'center',
     marginTop: 10,
   },
 });
