@@ -11,6 +11,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from './firebase/setup.js';
 import { useEffect,useState } from 'react';
+import Notification from './components/Notification';
 
 const Stack = createNativeStackNavigator();
 export default function App() {
@@ -26,6 +27,7 @@ export default function App() {
   },[])
   return (
     <NavigationContainer>
+      <Notification/>
       <Stack.Navigator>
         <Stack.Screen name="VanMovie" component={TabNavigator} options={{ headerShown: false }} />
         <Stack.Screen name="Detail" component={Detail}/>
