@@ -28,20 +28,21 @@ export default function Profile() {
         alert('Sorry, we need camera permissions to make this work!');
         return;
       }
-
+  
       let result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
       });
-
-      if (!result.canceled) {
-        setImageUri(result.uri);
+  
+      if (!result.canceled && result.assets && result.assets.length > 0) {
+        setImageUri(result.assets[0].uri);
       }
     } catch (error) {
       console.error("An error occurred:", error);
     }
   };
+  
 
   const deleteImage = () => {
     setImageUri(null);
