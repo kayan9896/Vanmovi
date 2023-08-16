@@ -6,7 +6,7 @@ import HeaderRight from '../components/HeaderRight';
 
 export default function Home({ navigation }) {
   const [data, setData] = React.useState([]);
-  const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1';//Just for test, need to modify later
+  const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1';//Just for test
   const genresMap = new Map(); 
 
   useEffect(function () {
