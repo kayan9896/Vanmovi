@@ -65,14 +65,24 @@ export default function Profile() {
 
         {imageUri ? (
           <>
-            <Image source={{ uri: imageUri }} style={{ width: 100, height: 100 }} />
-            <Button title="Edit" onPress={pickImage} />
-            <Button title="Delete" onPress={deleteImage} />
+            <Image source={{ uri: imageUri }} style={{ width: 100, height: 100, alignSelf: 'center' }} />
+            
+            <View style={styles.buttonRow}>
+            <View style={styles.editDeleteButton}>
+              <Button title="Edit" onPress={pickImage} />
+            </View>
+            <View style={styles.editDeleteButton}>
+              <Button title="Delete" onPress={deleteImage} />
+            </View>
+          </View>
+
           </>
         ) : (
           <>
             <MaterialIcons name="portrait" size={100} color="deepskyblue" style={{ alignSelf: 'center' }} />
-            <Button title="Add Portrait" onPress={pickImage} />
+            <View style={styles.addPortraitButton}>
+              <Button title="Add Portrait" onPress={pickImage} />
+            </View>
           </>
         )}
         <CommentinPro />
@@ -100,9 +110,11 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
   },
+
   addPortraitButton: {
-    width: '50%',
+    width: '40%',
     alignSelf: 'center',
+    marginTop: 10,
   },
   editDeleteButton: {
     width: '30%',
@@ -110,5 +122,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
 
-
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    marginTop: 10,
+  },
 });
