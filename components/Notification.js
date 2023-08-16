@@ -27,9 +27,12 @@ export default function Notification() {
                         body:'Click to view'
                     },
                     trigger:{
-                        seconds:5
-                    },
-                    date:new Date(Date.now()+5000)
+                        weekday:4,
+                        repeats:true,
+                        hour:9,
+                        minute:48,
+                    }
+                    
                 })
             }else{
                 alert('Please allow notification')
