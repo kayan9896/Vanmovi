@@ -26,10 +26,10 @@ export default function Notification() {
                             body:'Click to view'
                         },
                         trigger:{
-                            weekday:4,
+                            weekday:6,
                             repeats:true,
                             hour:9,
-                            minute:59,
+                            minute:0,
                         }
                         
                     })
