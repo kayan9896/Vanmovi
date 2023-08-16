@@ -62,22 +62,23 @@ export default function Profile() {
       <View style={styles.container}>
         <HeaderLeft title="Detail" />
         <Text>{auth.currentUser.email}</Text>
-        <Pressable style={styles.button} onPress={() => { signOut(auth); }}>
-          <Text style={styles.buttonText}>Sign Out</Text>
-        </Pressable>
+
         {imageUri ? (
           <>
-            <Image source={{ uri: imageUri }} style={{ width: 200, height: 200 }} />
+            <Image source={{ uri: imageUri }} style={{ width: 100, height: 100 }} />
             <Button title="Edit" onPress={pickImage} />
             <Button title="Delete" onPress={deleteImage} />
           </>
         ) : (
           <>
-            <MaterialIcons name="portrait" size={50} color="black" />
+            <MaterialIcons name="portrait" size={100} color="deepskyblue" style={{ alignSelf: 'center' }} />
             <Button title="Add Portrait" onPress={pickImage} />
           </>
         )}
         <CommentinPro />
+        <Pressable style={styles.button} onPress={() => { signOut(auth); }}>
+          <Text style={styles.buttonText}>Sign Out</Text>
+        </Pressable>
       </View>
     );
   }
@@ -99,4 +100,15 @@ const styles = StyleSheet.create({
   buttonText: {
     color: 'white',
   },
+  addPortraitButton: {
+    width: '50%',
+    alignSelf: 'center',
+  },
+  editDeleteButton: {
+    width: '30%',
+    alignSelf: 'center',
+    marginTop: 10,
+  },
+
+
 });
