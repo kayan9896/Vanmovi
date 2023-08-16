@@ -6,14 +6,16 @@ import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase/setup.js';
 import HeaderLeft from '../components/HeaderLeft';
 import CommentinPro from './CommentinPro';
-import Login from '../components/Login'; // assuming Login component is located here
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import Login from '../components/Login';
+import Signup from '../components/Signup';
 
 export default function Profile() {
   const [loggedIn, setLoggedIn] = useState(auth.currentUser);
   const [imageUri, setImageUri] = useState(null);
   const [showLoginModal, setShowLoginModal] = useState(false);
-
+  const [showSignupModal, setShowSignupModal] = useState(false);
+  
   const fetchImageUri = async () => {
     try {
       const savedUri = await AsyncStorage.getItem('@saved_image');
@@ -35,7 +37,7 @@ export default function Profile() {
     });
     fetchImageUri();
   }, []);
-
+  
   const saveImageUri = async (uri) => {
     try {
       await AsyncStorage.setItem('@saved_image', uri);
@@ -75,16 +77,25 @@ export default function Profile() {
       console.error("Failed to delete image URI:", e);
     }
   };
-
+  
   if (!loggedIn) {
     return (
       <View style={styles.container}>
         <HeaderLeft title="Detail" />
         <Text>You are not logged in</Text>
+        
+        <Text style={styles.infoText}>Are you an existing user?</Text>
         <Pressable style={styles.button} onPress={() => { setShowLoginModal(true); }}>
           <Text style={styles.buttonText}>Log In</Text>
         </Pressable>
+        
+        <Text style={styles.infoText}>Are you a new user?</Text>
+        <Pressable style={[styles.button, { marginTop: 10 }]} onPress={() => { setShowSignupModal(true); }}>
+          <Text style={styles.buttonText}>Sign Up</Text>
+        </Pressable>
+        
         {showLoginModal && <Login fail={setShowLoginModal} />}
+        {showSignupModal && <Signup fail={setShowSignupModal} />}
       </View>
     );
   } else {
@@ -154,5 +165,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     marginTop: 10,
+  },
+  infoText: {
+    alignSelf: 'center',
+    marginTop: 20,
+    marginBottom: 5,
   },
 });
