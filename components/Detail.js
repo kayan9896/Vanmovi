@@ -1,4 +1,4 @@
-import { View, Text, Image, FlatList, StyleSheet, KeyboardAvoidingView, Platform, TouchableWithoutFeedback } from 'react-native';
+import { View, Text, Image, FlatList, StyleSheet } from 'react-native';
 import React, { useEffect } from 'react';
 import Input from './Input';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
@@ -7,7 +7,6 @@ import Popup from './Popup.js';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase/setup.js';
 import HeaderLeft from '../components/HeaderLeft';
-
 
 export default function Detail({ route }) {
   const [cms, setCms] = React.useState([]);
@@ -29,37 +28,30 @@ export default function Detail({ route }) {
   }, []);
 
   return (
-    <KeyboardAvoidingView
-        style={{ flex: 1 }}
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-    >
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={styles.container}>
-                <HeaderLeft title="Detail" />
-                <Popup vis={pop} changevis={setPop} />
-                <FlatList
-                    data={cms}
-                    ListHeaderComponent={() => (
-                        <>
-                            <Image
-                                style={styles.poster}
-                                source={{ uri: `https://image.tmdb.org/t/p/w500/${route.params.info.poster_path}` }}
-                            />
-                            <View style={styles.details}>
-                                <Text style={styles.title}>{route.params.info.name}</Text>
-                                <Text style={styles.overview}>{route.params.info.overview}</Text>
-                                <Input mvname={route.params.info.name} loggedIn={loggedIn} changepop={setPop} />
-                            </View>
-                            <CommentSection />
-                        </>
-                    )}
-                    renderItem={({ item }) => <CommentItem comment={item.cm} user={item.user || "Anonymous"} />}
-                    keyExtractor={(item, index) => index.toString()}
-                />
+    <View style={styles.container}>
+      <HeaderLeft title="Detail" />
+      <Popup vis={pop} changevis={setPop} />
+      <FlatList
+        data={cms}
+        ListHeaderComponent={() => (
+          <>
+            <Image
+              style={styles.poster}
+              source={{ uri: `https://image.tmdb.org/t/p/w500/${route.params.info.poster_path}` }}
+            />
+            <View style={styles.details}>
+              <Text style={styles.title}>{route.params.info.name}</Text>
+              <Text style={styles.overview}>{route.params.info.overview}</Text>
+              <Input mvname={route.params.info.name} loggedIn={loggedIn} changepop={setPop} />
             </View>
-        </TouchableWithoutFeedback>
-    </KeyboardAvoidingView>
-);
+            <CommentSection />
+          </>
+        )}
+        renderItem={({ item }) => <CommentItem comment={item.cm} user={item.user || "Anonymous"} />}
+        keyExtractor={(item, index) => index.toString()}
+      />
+    </View>
+  );
 }
 
 const CommentSection = () => (
