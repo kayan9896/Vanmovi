@@ -1,5 +1,5 @@
 import { View, Text,Pressable } from 'react-native'
-import React from 'react'
+import React,{useEffect} from 'react'
 import * as Notifications from "expo-notifications";
 
 Notifications.setNotificationHandler({handleNotification:async()=>({shouldShowAlert:true,shouldPlaySound:true,shouldSetBadge:true})})
@@ -16,32 +16,35 @@ export default function Notification() {
         }
         return true
     }
+    useEffect(function(){
+        async function noti(){
+            try{
+                if(await validPermit()){
+                    await Notifications.scheduleNotificationAsync({
+                        content:{
+                            title:'You have a new notification',
+                            body:'Click to view'
+                        },
+                        trigger:{
+                            weekday:4,
+                            repeats:true,
+                            hour:9,
+                            minute:59,
+                        }
+                        
+                    })
+                }else{
+                    alert('Please allow notification')
+                }
+    
+            }catch(e){
+              console.log(e);
+            }
+          }
+          noti()
+    },[])
   return (
     <View>
-      <Pressable style={{backgroundColor:'pink',alignSelf:'center',padding:10,margin:10}} onPress={async function(){
-        try{
-            if(await validPermit()){
-                await Notifications.scheduleNotificationAsync({
-                    content:{
-                        title:'You have a new notification',
-                        body:'Click to view'
-                    },
-                    trigger:{
-                        weekday:4,
-                        repeats:true,
-                        hour:9,
-                        minute:48,
-                    }
-                    
-                })
-            }else{
-                alert('Please allow notification')
-            }
-
-        }catch(e){
-          console.log(e);
-        }
-      }}><Text>Notification</Text></Pressable>
     </View>
   )
 }
