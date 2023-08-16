@@ -7,9 +7,7 @@ export default function Signup({ fail }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [phoneNumber, setPhoneNumber] = React.useState('');
   const [emailError, setEmailError] = React.useState('');
-  const [phoneNumberError, setPhoneNumberError] = React.useState('');
 
   const validateEmail = () => {
     let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
@@ -19,16 +17,6 @@ export default function Signup({ fail }) {
     } else {
       setEmailError('Invalid Email');
       return false;
-    }
-  };
-
-  const validatePhoneNumber = () => {
-    if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
-      setPhoneNumberError('Invalid Phone Number');
-      return false;
-    } else {
-      setPhoneNumberError('');
-      return true;
     }
   };
 
@@ -69,10 +57,7 @@ export default function Signup({ fail }) {
           if(!validateEmail()){
             alert('Invalid Email');
           }
-          if(!validatePhoneNumber()){
-            alert('Invalid Phone Number');
-          }
-          if (validateEmail() && validatePhoneNumber()&& password === confirmPassword) {
+          if (validateEmail() && password === confirmPassword) {
             async function signup() {
               try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
