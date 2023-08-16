@@ -44,16 +44,6 @@ export default function Signup({ fail }) {
       />
       <Text style={{ color: 'red' }}>{emailError}</Text>
 
-      <Text style={styles.label}>Phone Number</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Phone Number"
-        value={phoneNumber}
-        onChangeText={(newText) => setPhoneNumber(newText)}
-        onBlur={validatePhoneNumber}
-      />
-      <Text style={{ color: 'red' }}>{phoneNumberError}</Text>
-
       <Text style={styles.label}>Password</Text>
       <TextInput
         style={styles.input}
