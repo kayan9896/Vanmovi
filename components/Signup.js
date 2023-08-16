@@ -7,9 +7,7 @@ export default function Signup({ fail }) {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const [confirmPassword, setConfirmPassword] = React.useState('');
-  const [phoneNumber, setPhoneNumber] = React.useState('');
   const [emailError, setEmailError] = React.useState('');
-  const [phoneNumberError, setPhoneNumberError] = React.useState('');
 
   const validateEmail = () => {
     let reg = /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(.\w{2,3})+$/;
@@ -19,16 +17,6 @@ export default function Signup({ fail }) {
     } else {
       setEmailError('Invalid Email');
       return false;
-    }
-  };
-
-  const validatePhoneNumber = () => {
-    if (phoneNumber.length !== 10 || isNaN(phoneNumber)) {
-      setPhoneNumberError('Invalid Phone Number');
-      return false;
-    } else {
-      setPhoneNumberError('');
-      return true;
     }
   };
 
@@ -43,16 +31,6 @@ export default function Signup({ fail }) {
         onBlur={validateEmail}
       />
       <Text style={{ color: 'red' }}>{emailError}</Text>
-
-      <Text style={styles.label}>Phone Number</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Phone Number"
-        value={phoneNumber}
-        onChangeText={(newText) => setPhoneNumber(newText)}
-        onBlur={validatePhoneNumber}
-      />
-      <Text style={{ color: 'red' }}>{phoneNumberError}</Text>
 
       <Text style={styles.label}>Password</Text>
       <TextInput
@@ -79,10 +57,7 @@ export default function Signup({ fail }) {
           if(!validateEmail()){
             alert('Invalid Email');
           }
-          if(!validatePhoneNumber()){
-            alert('Invalid Phone Number');
-          }
-          if (validateEmail() && validatePhoneNumber()&& password === confirmPassword) {
+          if (validateEmail() && password === confirmPassword) {
             async function signup() {
               try {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
