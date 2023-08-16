@@ -8,7 +8,7 @@ const Tab = createBottomTabNavigator();
 
 const getTabBarIcon = (route, focused, color) => {
     let iconName;
-    let iconSize = focused ? 28 : 24; // You can adjust the sizes here
+    let iconSize = focused ? 28 : 24; 
 
     switch (route.name) {
         case 'Movies':
@@ -33,11 +33,11 @@ const TabNavigator = () => (
             tabBarInactiveTintColor: 'white',
             tabBarStyle: {
                 backgroundColor: 'deepskyblue',
-                height: 65, // Adjusting height
+                height: 65, 
                 borderTopWidth: 0,
                 elevation: 10,
                 shadowOpacity: 0.1,
-                paddingBottom: 5, // Adjusting bottom padding
+                paddingBottom: 5, 
             },
             tabBarLabelStyle: {
                 fontSize: 12,
