@@ -47,7 +47,7 @@ export default function Detail({ route }) {
             <CommentSection />
           </>
         )}
-        renderItem={({ item }) => <CommentItem comment={item.cm} />}
+        renderItem={({ item }) => <CommentItem comment={item.cm} user={item.user || "Anonymous"} />}
         keyExtractor={(item, index) => index.toString()}
       />
     </View>
@@ -60,9 +60,13 @@ const CommentSection = () => (
   </View>
 );
 
-const CommentItem = ({ comment }) => (
+const CommentItem = ({ comment, user }) => (
   <View style={styles.commentContainer}>
-    <Text style={styles.commentText}>{comment}</Text>
+    <View style={styles.avatar}></View>
+    <View style={styles.commentBody}>
+      <Text style={styles.commentUser}>{user}</Text>
+      <Text style={styles.commentText}>{comment}</Text>
+    </View>
   </View>
 );
 
@@ -96,19 +100,35 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
   },
   commentsTitle: {
-    fontSize: 20,
+    fontSize: 22,
     fontWeight: 'bold',
     marginBottom: 15,
-    color: '#444',
+    color: '#333',
   },
   commentContainer: {
-    marginBottom: 12, 
-    backgroundColor: 'rgba(0,0,0,0.03)',  
+    flexDirection: 'row',
+    marginBottom: 20, 
+    backgroundColor: 'rgba(0,0,0,0.02)',  
     borderRadius: 5,
     padding: 10,
   },
+  avatar: {
+    width: 40,
+    height: 40,
+    borderRadius: 20,
+    backgroundColor: '#ccc',
+    marginRight: 10,
+  },
+  commentBody: {
+    flex: 1,
+  },
+  commentUser: {
+    fontWeight: 'bold',
+    color: '#333',
+    marginBottom: 5,
+  },
   commentText: {
     fontSize: 16,
-    color: '#444',
+    color: '#555',
   },
 });
