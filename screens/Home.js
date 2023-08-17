@@ -1,12 +1,12 @@
-import { View, Text, FlatList, StyleSheet } from 'react-native';
+import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
 import React, { useEffect } from 'react';
 import Item from '../components/Item';
 import HeaderRight from '../components/HeaderRight';
-
+import * as Notifications from "expo-notifications";
 
 export default function Home({ navigation }) {
   const [data, setData] = React.useState([]);
-  const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1';//Just for test, need to modify later
+  const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1'; //Just for test
   const genresMap = new Map(); 
 
   useEffect(function () {
@@ -37,7 +37,6 @@ export default function Home({ navigation }) {
       }
     }
     
-
     async function fetchData() {
       try {
         await fetchGenres();
@@ -54,10 +53,33 @@ export default function Home({ navigation }) {
     fetchData();
   }, []);
 
+  const getRandomMovieGenre = () => {
+    const genres = ["Animation", "Action", "Adventure", "Comedy", "Romance", "Fantasy", "Family", "Horror"];
+    const randomIndex = Math.floor(Math.random() * genres.length);
+    return genres[randomIndex];
+  }
+
+  const handleTestNotification = async () => {
+    const { status } = await Notifications.requestPermissionsAsync();
+
+    if (status === 'granted') {
+      const randomGenre = getRandomMovieGenre();
+      
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: 'Movie Recommendation',
+          body: `Today is a good day for a ${randomGenre} movie!`,
+        },
+        trigger: null,
+      });
+    }
+  };
+
   return (
     <View style={styles.container}>
       <HeaderRight title="Movies" navigation={navigation} />
       <Text style={styles.title}>What's new!</Text>
+      <Button title="Movie Recommend" onPress={handleTestNotification} />
       <FlatList data={data} renderItem={(i) => { return <Item info={i.item} /> }} />
     </View>
   );

@@ -3,35 +3,52 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Home from '../screens/Home';
 import Cinema from '../screens/Cinema';
-import HeaderRight from '../components/HeaderRight';
 
 const Tab = createBottomTabNavigator();
+
+const getTabBarIcon = (route, focused, color) => {
+    let iconName;
+    let iconSize = focused ? 28 : 24; 
+
+    switch (route.name) {
+        case 'Movies':
+            iconName = focused ? 'movie-filter' : 'movie-filter-outline';
+            break;
+        case 'Cinemas':
+            iconName = focused ? 'map-marker-account' : 'map-marker-account-outline';
+            break;
+        default:
+            iconName = 'question-mark';
+            break;
+    }
+
+    return <MaterialCommunityIcons name={iconName} size={iconSize} color={color} />;
+};
 
 const TabNavigator = () => (
     <Tab.Navigator
         screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color, size }) => {
-                let iconName;
-                if (route.name === 'Movies') {
-                    iconName = focused ? 'movie-filter' : 'movie-filter-outline';
-                } else if (route.name === 'Cinemas') {
-                    iconName = focused ? 'map-marker-account' : 'map-marker-account-outline';
-                }
-                return <MaterialCommunityIcons name={iconName} size={size} color={color} />;
-            },
+            tabBarIcon: ({ focused, color }) => getTabBarIcon(route, focused, color),
             tabBarActiveTintColor: 'yellow',
             tabBarInactiveTintColor: 'white',
-            tabBarStyle: [{ 
-              display: 'flex', 
-              backgroundColor: 'deepskyblue',
-              height: 60
-            }]
+            tabBarStyle: {
+                backgroundColor: 'deepskyblue',
+                height: 65, 
+                borderTopWidth: 0,
+                elevation: 10,
+                shadowOpacity: 0.1,
+                paddingBottom: 5, 
+            },
+            tabBarLabelStyle: {
+                fontSize: 12,
+                marginBottom: 4,
+            }
         })}
-
     >
         <Tab.Screen name="Movies" component={Home} />
         <Tab.Screen name="Cinemas" component={Cinema} />
     </Tab.Navigator>
 );
+
 
 export default TabNavigator;
