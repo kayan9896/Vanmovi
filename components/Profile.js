@@ -10,7 +10,7 @@ import Login from '../components/Login';
 import Signup from '../components/Signup';
 import CommentinPro from './CommentinPro';
 import Notification from './MovieNotification.js';
-import { ref, uploadBytesResumable,getDownloadURL} from 'firebase/storage';
+import { ref, uploadBytesResumable,getDownloadURL,deleteObject} from 'firebase/storage';
 import {add,update,remove,get,set} from '../firebase/util.js'
 import { storage } from "../firebase/setup.js";
 
@@ -44,6 +44,7 @@ export default function Profile() {
           const reference = ref(storage,imagelink);
           const downloadUri = await getDownloadURL(reference);
           setShowuri(downloadUri);
+
           console.log(showuri)
         }else{
           setShowuri(null);
@@ -54,7 +55,7 @@ export default function Profile() {
       }
     };
     if(loggedIn)fetchImageUri();
-  }, [imageUri,loggedIn&&auth.currentUser.uid]);
+  }, [imageUri]);
 
   const saveImageUri = async (uri) => {
     try {
@@ -97,6 +98,9 @@ export default function Profile() {
   const deleteImage = async () => {
     try {
       remove('users',auth.currentUser.uid)
+      const t=ref(storage, showuri)
+      console.log(t._location.path_)
+      const dl=deleteObject(ref(storage, t._location.path_));
     } catch (e) {
       console.error("Failed to delete image URI:", e);
     }
@@ -133,7 +137,7 @@ export default function Profile() {
           <Image source={{ uri: showuri }} style={{ width: 100, height: 100, alignSelf: 'center' }} />
 
           <View style={styles.buttonRow}>
-            <Pressable style={styles.editDeleteButton} onPress={pickImage}>
+            <Pressable style={styles.editDeleteButton} onPress={function(){deleteImage();pickImage()}}>
               <Text style={styles.buttonText}>Edit</Text>
             </Pressable>
             <Pressable style={styles.editDeleteButton} onPress={deleteImage}>
