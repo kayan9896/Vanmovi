@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, Image, Pressable } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { onAuthStateChanged, signOut } from 'firebase/auth';
 import { auth } from '../firebase/setup.js';
@@ -11,10 +10,14 @@ import Login from '../components/Login';
 import Signup from '../components/Signup';
 import CommentinPro from './CommentinPro';
 import Notification from './MovieNotification.js';
+import { ref, uploadBytesResumable,getDownloadURL} from 'firebase/storage';
+import {add,update,remove,get,set} from '../firebase/util.js'
+import { storage } from "../firebase/setup.js";
 
 export default function Profile() {
   const [loggedIn, setLoggedIn] = useState(auth.currentUser);
   const [imageUri, setImageUri] = useState(null);
+  const [showuri,setShowuri]=useState(null)
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
 
@@ -28,27 +31,40 @@ export default function Profile() {
     setShowLoginModal(false);
   };
 
-  const fetchImageUri = async () => {
-    try {
-      const savedUri = await AsyncStorage.getItem('@saved_image');
-      if (savedUri) {
-        setImageUri(savedUri);
-      }
-    } catch (e) {
-      console.error("Failed to fetch image URI:", e);
-    }
-  };
-
   useEffect(() => {
     onAuthStateChanged(auth, user => {
       setLoggedIn(!!user);
     });
-    fetchImageUri();
-  }, []);
+    async function fetchImageUri() {
+      try {
+        const dt = await get('users',auth.currentUser.uid);
+        
+        if (dt) {
+          const imagelink=dt.image;
+          const reference = ref(storage,imagelink);
+          const downloadUri = await getDownloadURL(reference);
+          setShowuri(downloadUri);
+          console.log(showuri)
+        }else{
+          setShowuri(null);
+        }
+        console.log(showuri)
+      } catch (e) {
+        console.error("Failed to fetch image URI:", e);
+      }
+    };
+    if(loggedIn)fetchImageUri();
+  }, [imageUri,loggedIn&&auth.currentUser.uid]);
 
   const saveImageUri = async (uri) => {
     try {
-      await AsyncStorage.setItem('@saved_image', uri);
+      const response= await fetch(uri);
+      const blob = await response.blob();
+      const imageName = uri.substring(uri.lastIndexOf("/") + 1);
+      const rf= await ref(storage, `images/${imageName}`);
+      const uploadTask = await uploadBytesResumable(rf, blob);
+      let path=uploadTask.metadata.fullPath;
+      set('users',{id:auth.currentUser.uid,image:path})
     } catch (e) {
       console.error("Failed to save image URI:", e);
     }
@@ -79,9 +95,8 @@ export default function Profile() {
   };
 
   const deleteImage = async () => {
-    setImageUri(null);
     try {
-      await AsyncStorage.removeItem('@saved_image');
+      remove('users',auth.currentUser.uid)
     } catch (e) {
       console.error("Failed to delete image URI:", e);
     }
@@ -113,9 +128,9 @@ export default function Profile() {
       <HeaderLeft title="Detail" />
       <Text style={styles.emailText}>{auth.currentUser.email}</Text>
 
-      {imageUri ? (
+      {showuri ? (
         <>
-          <Image source={{ uri: imageUri }} style={{ width: 100, height: 100, alignSelf: 'center' }} />
+          <Image source={{ uri: showuri }} style={{ width: 100, height: 100, alignSelf: 'center' }} />
 
           <View style={styles.buttonRow}>
             <Pressable style={styles.editDeleteButton} onPress={pickImage}>

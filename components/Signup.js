@@ -63,7 +63,7 @@ export default function Signup({ fail }) {
                 const userCredential = await createUserWithEmailAndPassword(auth, email, password);
                 alert('signed up successfully');
               } catch (e) {
-                alert('Fail to sign up');
+                alert('Fail to sign up: '+e.code);
               }
             }
             signup();
