@@ -7,6 +7,7 @@ import Popup from './Popup.js';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase/setup.js';
 import HeaderLeft from '../components/HeaderLeft';
+import CommentItem from '../components/CommentItem.js';
 
 export default function Detail({ route }) {
   const [cms, setCms] = React.useState([]);
@@ -60,15 +61,7 @@ const CommentSection = () => (
   </View>
 );
 
-const CommentItem = ({ comment, user }) => (
-  <View style={styles.commentContainer}>
-    <View style={styles.avatar}></View>
-    <View style={styles.commentBody}>
-      <Text style={styles.commentUser}>{user}</Text>
-      <Text style={styles.commentText}>{comment}</Text>
-    </View>
-  </View>
-);
+
 
 const styles = StyleSheet.create({
   container: {
