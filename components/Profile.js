@@ -57,6 +57,7 @@ export default function Profile() {
     });
     
     if(loggedIn){
+      console.log('login')
       fetchImageUri();
       console.log('login',showuri)
     }
@@ -109,15 +110,17 @@ export default function Profile() {
     try {
       remove('users',auth.currentUser.uid)
       const t=ref(storage, showuri)
-      console.log(t._location.path_)
+      //console.log(t._location.path_)
       deleteObject(ref(storage, t._location.path_));
-      setShowuri(null);
+      setTimeout(() => {
+        setShowuri(null);
+      }, 2000);
     } catch (e) {
       console.error("Failed to delete image URI:", e);
     }
     setTimeout(() => {
       callback();
-    }, 4000);
+    }, 2000);
   };
 
   if (!loggedIn) {
