@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
-import { Button } from 'react-native';
+import { View, Pressable } from 'react-native'; 
 import { useNavigation } from '@react-navigation/native';
+import { Ionicons } from '@expo/vector-icons'; 
 
 const HeaderLeft = ({ title }) => {
   const navigation = useNavigation();
@@ -16,10 +17,11 @@ const HeaderLeft = ({ title }) => {
       },
       headerTitleAlign: 'center',
       headerLeft: () => (
-        <Button
-          title="←Back"
-          onPress={() => navigation.goBack()}
-        />
+        <View style={{ marginLeft: 10 }}>
+          <Pressable onPress={() => navigation.goBack()}>
+            <Ionicons name="arrow-back-circle" size={28} color="yellow" />
+          </Pressable>
+        </View>
       ),
       headerRightContainerStyle: {
         marginRight: 10,
