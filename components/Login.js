@@ -28,7 +28,7 @@ export default function Login({ fail }) {
           try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
             alert('logged in successfully');
-          } catch (e) { alert('Fail to login'); }
+          } catch (e) { alert('Fail to login'+e.code); }
         }
         login();
         fail(false);

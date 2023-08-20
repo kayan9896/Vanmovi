@@ -1,5 +1,5 @@
 import {db} from './setup.js';
-import { collection, addDoc, deleteDoc, getDoc, updateDoc, doc } from "firebase/firestore";
+import { collection, addDoc, deleteDoc, getDoc, updateDoc, doc ,setDoc } from "firebase/firestore";
 
 async function add(colname,item){
     try{
@@ -10,9 +10,12 @@ async function add(colname,item){
     }
 }
 
-async function get(colname){
+async function get(colname,id){
     try{
         const docRef=await getDoc(doc(db,colname,id))
+        const dt=docRef.data()
+        return dt
+
     }
     catch(e){
         console.log(e)
@@ -38,4 +41,13 @@ async function update(colname,id){
     }
 }
 
-export {add, remove, update, get}
+async function set(colname,item){
+    try{
+        const docRef=await setDoc(doc(db,colname,item.id),item,{merge:true})
+    }
+    catch(e){
+        console.log(e)
+    }
+}
+
+export {add, remove, update, get,set}
