@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
-import { Pressable, StyleSheet, Text, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons'; // Import Ionicons
 
 const HeaderRight = ({ title, navigation, style }) => {
-
   useEffect(() => {
     navigation.setOptions({
       headerTitle: title,
@@ -14,15 +14,8 @@ const HeaderRight = ({ title, navigation, style }) => {
       },
       headerTitleAlign: 'center',
       headerRight: () => (
-        <Pressable 
-          style={({ pressed }) => [
-            styles.profileButton,
-            pressed ? styles.pressedProfileButton : {},
-            style 
-          ]}
-          onPress={() => navigation.navigate('Profile')}
-        >
-          <Text style={styles.profileButtonText}>Profile</Text>
+        <Pressable onPress={() => navigation.navigate('Profile')}>
+          <Ionicons name="person-circle-outline" size={29} color="yellow" style={styles.iconStyle} /> 
         </Pressable>
       ),
     });
@@ -32,18 +25,8 @@ const HeaderRight = ({ title, navigation, style }) => {
 };
 
 const styles = StyleSheet.create({
-  profileButton: {
-    paddingVertical: 8,
-    paddingHorizontal: 12,
-    borderRadius: 4,
-    backgroundColor: 'white',
-    marginRight: 10, 
-  },
-  pressedProfileButton: {
-    backgroundColor: '#ddd',
-  },
-  profileButtonText: {
-    color: 'deepskyblue',
+  iconStyle: {
+    marginRight: 10,
   },
 });
 
