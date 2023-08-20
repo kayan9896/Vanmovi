@@ -16,25 +16,28 @@ export default function Cinema({ navigation }) {
 
     useEffect(function () {
         async function getCinemas() {
-            setLoading(true);
+            
             const response = await fetch('https://www.cineplex.com/api/v1/theatres?language=en-us&range=500&skip=0&take=1000');
             const json = await response.json();
             const puredt = json.data.map(c => {
                 return { name: c.name, address: c.address1, city: c.city, latitude: c.latitude, longitude: c.longitude };
             });
             setCinemas(puredt);
-            setLoading(false);
+            
         }
         getCinemas();
     }, []);
 
     useEffect(function () {
         async function getLoc() {
+            setLoading(true);
             const pm = await valid();
             if (pm) {
                 const location = await Location.getCurrentPositionAsync({});
                 setLoc(location.coords);
+                setLoading(false);
             }
+            
         }
         getLoc();
     }, [Location]);

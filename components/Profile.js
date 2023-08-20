@@ -21,6 +21,7 @@ export default function Profile() {
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
 
+
   const openLoginModal = () => {
     setShowLoginModal(true);
     setShowSignupModal(false);
@@ -31,38 +32,43 @@ export default function Profile() {
     setShowLoginModal(false);
   };
 
-  useEffect(() => {
-    onAuthStateChanged(auth, user => {
-      setLoggedIn(!!user);
-    });
-    async function fetchImageUri() {
+  async function fetchImageUri() {
       try {
         const dt = await get('users',auth.currentUser.uid);
         
         if (dt) {
-          const imagelink=dt.image;
-          const reference = ref(storage,imagelink);
-          const downloadUri = await getDownloadURL(reference);
-          setShowuri(downloadUri);
-
-          console.log(showuri)
+          let imagelink=dt.image
+          if(imagelink){
+            const reference = ref(storage,imagelink);
+            const downloadUri = await getDownloadURL(reference);
+            setShowuri(downloadUri);
+          }
         }else{
           setShowuri(null);
         }
-        console.log(showuri)
       } catch (e) {
         console.error("Failed to fetch image URI:", e);
       }
-    };
-    if(loggedIn)fetchImageUri();
-  }, [imageUri]);
+    }
+
+  useEffect(() => {
+    onAuthStateChanged(auth, user => {
+      setLoggedIn(!!user);
+    });
+    
+    if(loggedIn){
+      fetchImageUri();
+      console.log('login',showuri)
+    }
+    
+  })
 
   const saveImageUri = async (uri) => {
     try {
       const response= await fetch(uri);
       const blob = await response.blob();
       const imageName = uri.substring(uri.lastIndexOf("/") + 1);
-      const rf= await ref(storage, `images/${imageName}`);
+      const rf= ref(storage, `images/${imageName}`);
       const uploadTask = await uploadBytesResumable(rf, blob);
       let path=uploadTask.metadata.fullPath;
       set('users',{id:auth.currentUser.uid,image:path})
@@ -71,7 +77,7 @@ export default function Profile() {
     }
   };
 
-  const pickImage = async () => {
+  const pickImage = async (callback) => {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
 
@@ -93,17 +99,25 @@ export default function Profile() {
     } catch (error) {
       console.error("An error occurred:", error);
     }
+    setTimeout(() => {
+      callback();
+    }, 4000);
+  
   };
 
-  const deleteImage = async () => {
+  const deleteImage = async (callback) => {
     try {
       remove('users',auth.currentUser.uid)
       const t=ref(storage, showuri)
       console.log(t._location.path_)
-      const dl=deleteObject(ref(storage, t._location.path_));
+      deleteObject(ref(storage, t._location.path_));
+      setShowuri(null);
     } catch (e) {
       console.error("Failed to delete image URI:", e);
     }
+    setTimeout(() => {
+      callback();
+    }, 4000);
   };
 
   if (!loggedIn) {
@@ -131,16 +145,21 @@ export default function Profile() {
     <View style={styles.container}>
       <HeaderLeft title="Detail" />
       <Text style={styles.emailText}>{auth.currentUser.email}</Text>
-
+      {console.log(showuri)}
       {showuri ? (
         <>
           <Image source={{ uri: showuri }} style={{ width: 100, height: 100, alignSelf: 'center' }} />
 
           <View style={styles.buttonRow}>
-            <Pressable style={styles.editDeleteButton} onPress={function(){deleteImage();pickImage()}}>
+            <Pressable style={styles.editDeleteButton} onPress={function(){deleteImage(()=>pickImage(fetchImageUri))
+            // console.log(imagelink)
+            // console.log(showuri)
+            }}>
               <Text style={styles.buttonText}>Edit</Text>
             </Pressable>
-            <Pressable style={styles.editDeleteButton} onPress={deleteImage}>
+            <Pressable style={styles.editDeleteButton} onPress={function(){
+              deleteImage(fetchImageUri)
+              }}>
               <Text style={styles.buttonText}>Delete</Text>
             </Pressable>
           </View>
@@ -148,7 +167,7 @@ export default function Profile() {
       ) : (
         <>
           <MaterialIcons name="portrait" size={100} color="deepskyblue" style={{ alignSelf: 'center' }} />
-          <Pressable style={styles.addPortraitButton} onPress={pickImage}>
+          <Pressable style={styles.addPortraitButton} onPress={function(){pickImage(fetchImageUri);}}>
             <Text style={styles.buttonText}>Add Portrait</Text>
           </Pressable>
         </>
@@ -197,6 +216,10 @@ const styles = StyleSheet.create({
   addPortraitButton: {
     width: '60%',
     alignSelf: 'center',
+    alignItems: 'center',
+    backgroundColor: '#888',
+    padding: 10,
+    borderRadius: 25,
     marginTop: 20,
   },
   editDeleteButton: {
