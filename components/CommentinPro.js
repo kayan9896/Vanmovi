@@ -8,7 +8,7 @@ import { remove } from '../firebase/util.js';
 export default function CommentinPro() {
     const [cm, setCm] = React.useState([]);
     useEffect(() => {
-        const dt = onSnapshot(query(collection(db, "comments"), where("user", '==', auth.currentUser.email)), q => {
+        const dt = onSnapshot(query(collection(db, "comments"), where("user", '==', auth.currentUser.uid)), q => {
             const puredt = q.empty ? [] : q.docs.map(function(i){return {...i.data(), id: i.id}});
             setCm(puredt);
         })
