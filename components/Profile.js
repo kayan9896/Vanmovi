@@ -103,7 +103,9 @@ export default function Profile() {
         aspect: [4, 3],
         quality: 1,
       });
-      if(result.canceled){return false}
+      if(result.canceled){
+        console.log('canceled')
+        return false}
       if (!result.canceled && result.assets && result.assets.length) {
         setImageUri(result.assets[0].uri);
         saveImageUri(result.assets[0].uri);
@@ -121,11 +123,12 @@ export default function Profile() {
   const editImage = async () => {
     try {
       const dt = await get('users',auth.currentUser.uid);
-      if(pickImage(fetchImageUri)){
+      if(pickImage(fetchImageUri)===true){
         if (dt) {
           let imagelink=dt.image
           if(imagelink){
             const t = ref(storage,imagelink);
+            console.log('dlt')
             setTimeout(() => {
               deleteObject(ref(storage, t._location.path_));}, 10000);
           }
