@@ -71,8 +71,7 @@ export default function Profile() {
       console.log('login')
       fetchImageUri();
       console.log('login',showuri)
-    }
-    
+    } 
   })
 
   const saveImageUri = async (uri) => {
@@ -104,7 +103,6 @@ export default function Profile() {
         quality: 1,
       });
       if(result.canceled){
-        console.log('canceled')
         return false}
       if (!result.canceled && result.assets && result.assets.length) {
         setImageUri(result.assets[0].uri);
@@ -123,12 +121,11 @@ export default function Profile() {
   const editImage = async () => {
     try {
       const dt = await get('users',auth.currentUser.uid);
-      if(pickImage(fetchImageUri)===true){
+      if(await pickImage(fetchImageUri)){
         if (dt) {
           let imagelink=dt.image
           if(imagelink){
             const t = ref(storage,imagelink);
-            console.log('dlt')
             setTimeout(() => {
               deleteObject(ref(storage, t._location.path_));}, 10000);
           }
