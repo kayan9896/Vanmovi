@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     marginTop: 0,
     flex: 1,
     padding: 20,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: 'lightyellow',
   },
   buttonText: {
     color: 'white',
