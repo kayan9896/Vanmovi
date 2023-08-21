@@ -1,12 +1,13 @@
-import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native';
-import React, { useEffect } from 'react';
+import { View, Text, FlatList, StyleSheet, Pressable, TextInput, Alert } from 'react-native';
+import React, { useEffect, useState } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { auth } from '../firebase/setup.js';
 import { db } from '../firebase/setup.js';
-import { remove } from '../firebase/util.js';
+import { remove, update } from '../firebase/util.js';
 
 export default function CommentinPro() {
     const [cm, setCm] = React.useState([]);
+
     useEffect(() => {
         const dt = onSnapshot(query(collection(db, "comments"), where("user", '==', auth.currentUser.uid)), q => {
             const puredt = q.empty ? [] : q.docs.map(function(i){return {...i.data(), id: i.id}});
@@ -14,30 +15,76 @@ export default function CommentinPro() {
         })
         return () => { dt() };
       }, []);
+
     return (
         <View>
             <FlatList data={cm} renderItem={({ item }) => <CommentItem i={item} />}/>
         </View>
-    )
+    );
 }
 
-const CommentItem = ({ i }) => (
-    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-        <View style={{ flex: 1 }}>
-            <Text style={styles.commentText}>{i.cm} from {i.mv}</Text>
+const CommentItem = ({ i }) => {
+    const [isEditing, setIsEditing] = useState(false);
+    const [editedComment, setEditedComment] = useState(i.cm);
+
+    const handleConfirm = async () => {
+        if (editedComment !== i.cm) {
+            await update('comments', i.id, { cm: editedComment });
+        }
+        setIsEditing(false);
+    };
+
+    const handleDelete = () => {
+        Alert.alert(
+            "Alert",
+            "Do you want to delete this comment?",
+            [
+                {
+                    text: "No",
+                    onPress: () => {},
+                    style: "cancel"
+                },
+                {
+                    text: "Yes",
+                    onPress: () => {
+                        remove('comments', i.id);
+                        alert('Comment deleted');
+                    }
+                }
+            ],
+            { cancelable: true }
+        );
+    };
+
+    if (isEditing) {
+        return (
+            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                <TextInput
+                    value={editedComment}
+                    onChangeText={setEditedComment}
+                    style={styles.commentInput}
+                />
+                <Pressable onPress={handleConfirm}>
+                    <Text style={styles.actionText}>Confirm</Text>
+                </Pressable>
+            </View>
+        );
+    }
+
+    return (
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+            <View style={{ flex: 1 }}>
+                <Text style={styles.commentText}>{i.cm} from {i.mv}</Text>
+            </View>
+            <Pressable onPress={() => setIsEditing(true)}>
+                <Text style={styles.actionText}>Edit</Text>
+            </Pressable>
+            <Pressable onPress={handleDelete} style={styles.deleteContainer}>
+                <Text style={styles.actionText}>Delete</Text>
+            </Pressable>
         </View>
-        <Pressable onPress={function () { alert('Edit comment'); }}>
-            <Text style={styles.actionText}>Edit</Text>
-        </Pressable>
-        <Pressable onPress={function () {
-                remove('comments', i.id)
-                alert('comment deleted');
-            }
-        }>
-            <Text style={styles.actionText}>Delete</Text>
-        </Pressable>
-    </View>
-);
+    );
+};
 
 const styles = StyleSheet.create({
     commentText: {
@@ -50,6 +97,15 @@ const styles = StyleSheet.create({
     },
     actionText: {
         color: 'dodgerblue',
-        marginLeft: 10, 
-    }
+        marginLeft: 10,
+    },
+    deleteContainer: {
+        marginRight: 10,
+    },
+    commentInput: {
+        flex: 1,
+        backgroundColor: 'rgba(0,0,0,0.05)',
+        padding: 10,
+        borderRadius: 5,
+    },
 });
