@@ -61,7 +61,7 @@ export default function Camera({ showuri, deleteImage, pickImage, fetchImageUri,
                   <MaterialIcons name="add-a-photo" size={40} color="dodgerblue" />
                 </Pressable>
                 <Pressable onPress={pickFromGallery}>
-                  <FontAwesome name="picture-o" size={37} color="dodgerblue" />
+                  <FontAwesome name="picture-o" size={38} color="dodgerblue" />
                 </Pressable>
               </>
             )}
