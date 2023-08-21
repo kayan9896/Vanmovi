@@ -1,9 +1,10 @@
-import { View, Text, FlatList, StyleSheet, Pressable, TextInput, Alert } from 'react-native';
+import { View, FlatList, StyleSheet, Pressable, TextInput, Alert, Text } from 'react-native';
 import React, { useEffect, useState } from 'react';
 import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { auth } from '../firebase/setup.js';
 import { db } from '../firebase/setup.js';
 import { remove, update } from '../firebase/util.js';
+import { AntDesign, FontAwesome } from '@expo/vector-icons';
 
 export default function CommentinPro() {
     const [cm, setCm] = React.useState([]);
@@ -40,12 +41,12 @@ const CommentItem = ({ i }) => {
             "Do you want to delete this comment?",
             [
                 {
-                    text: "Cancel",
+                    text: "No",
                     onPress: () => {},
                     style: "cancel"
                 },
                 {
-                    text: "Okay",
+                    text: "Yes",
                     onPress: () => {
                         remove('comments', i.id);
                         alert('Comment deleted');
@@ -62,10 +63,10 @@ const CommentItem = ({ i }) => {
                 <TextInput
                     value={editedComment}
                     onChangeText={setEditedComment}
-                    style={styles.commentInput}
+                    style={[styles.commentText, { marginBottom: 10 }]}
                 />
                 <Pressable onPress={handleConfirm} style={styles.confirmContainer}>
-                    <Text style={styles.actionText}>Confirm</Text>
+                    <FontAwesome name="check" size={20} color="dodgerblue" />
                 </Pressable>
             </View>
         );
@@ -76,11 +77,11 @@ const CommentItem = ({ i }) => {
             <View style={{ flex: 1 }}>
                 <Text style={styles.commentText}>{i.cm} from {i.mv}</Text>
             </View>
-            <Pressable onPress={() => setIsEditing(true)}>
-                <Text style={styles.actionText}>Edit</Text>
+            <Pressable onPress={() => setIsEditing(true)} style={styles.iconContainer}>
+                <AntDesign name="edit" size={20} color="dodgerblue" />
             </Pressable>
-            <Pressable onPress={handleDelete} style={styles.deleteContainer}>
-                <Text style={styles.actionText}>Delete</Text>
+            <Pressable onPress={handleDelete} style={styles.iconContainer}>
+                <AntDesign name="delete" size={20} color="dodgerblue" />
             </Pressable>
         </View>
     );
@@ -95,14 +96,12 @@ const styles = StyleSheet.create({
         backgroundColor: 'rgba(0,0,0,0.05)',
         borderRadius: 5,
     },
-    actionText: {
-        color: 'dodgerblue',
+    iconContainer: {
         marginLeft: 10,
-    },
-    deleteContainer: {
         marginRight: 10,
     },
     confirmContainer: {
+        marginLeft: 10,
         marginRight: 10,
     },
     commentInput: {

@@ -36,7 +36,7 @@ export default function Profile() {
 
   const renderUserComments = () => {
     return (
-      <View style={{ flex: 0.35 }}>
+      <View style={{ flex: 0.40 }}>
         <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Comments</Text>
         <CommentinPro />
       </View>
