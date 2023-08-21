@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, Image, Pressable } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { MaterialIcons, Ionicons } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
 import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -146,7 +146,11 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
-      <HeaderLeft title="Detail" />
+      <HeaderLeft title="Profile" />
+      <Pressable style={styles.signOutContainer} onPress={() => signOut(auth)}>
+        <Ionicons name="log-out" size={24} color="dodgerblue" />
+        <Text style={styles.signOutText}>Log Out</Text>
+      </Pressable>
       <Text style={styles.emailText}>{auth.currentUser.email}</Text>
       {console.log(showuri)}
       {showuri ? (
@@ -177,9 +181,7 @@ export default function Profile() {
       )}
 
       <CommentinPro />
-      <Pressable style={styles.button} onPress={() => signOut(auth)}>
-        <Text style={styles.buttonText}>Sign Out</Text>
-      </Pressable>
+
       <Notification />
     </View>
   );
@@ -188,6 +190,7 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 0,
     flex: 1,
     padding: 20,
     backgroundColor: '#f4f4f4',
@@ -199,8 +202,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
-    marginTop: 20,
-    width: '50%',
+    marginTop: 2,
+    width: '30%',
     alignSelf: 'center',
     shadowColor: "#000",
     shadowOffset: {
@@ -217,7 +220,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   addPortraitButton: {
-    width: '50%',
+    width: '30%',
     alignSelf: 'center',
     alignItems: 'center',
     backgroundColor: '#888',
@@ -226,8 +229,8 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   editDeleteButton: {
-    width: '30%',
-    marginTop: 20,
+    width: '20%',
+    marginTop: 2,
     marginHorizontal: 15,
     backgroundColor: '#888', 
     padding: 10,
@@ -242,7 +245,7 @@ const styles = StyleSheet.create({
   },
   infoText: {
     alignSelf: 'center',
-    marginTop: 30,
+    marginTop: 10,
     marginBottom: 10,
     fontSize: 18, 
     fontWeight: 'bold', 
@@ -251,8 +254,21 @@ const styles = StyleSheet.create({
   emailText: {
     alignSelf: 'center',
     marginTop: 20,
+    marginBottom: 10,
     fontSize: 16,
     fontWeight: '500',
     color: '#555',
-  }
+  },
+  signOutContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-end',  // Ensure it's aligned to the right end
+    marginRight: 10,  // Some margin to the right for spacing
+  },
+  signOutText: {
+    color: 'dodgerblue',
+    marginLeft: 5,  // Space between the icon and text
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });
