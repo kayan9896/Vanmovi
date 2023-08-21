@@ -40,12 +40,12 @@ const CommentItem = ({ i }) => {
             "Do you want to delete this comment?",
             [
                 {
-                    text: "NO",
+                    text: "Cancel",
                     onPress: () => {},
                     style: "cancel"
                 },
                 {
-                    text: "YES",
+                    text: "Okay",
                     onPress: () => {
                         remove('comments', i.id);
                         alert('Comment deleted');
@@ -64,7 +64,7 @@ const CommentItem = ({ i }) => {
                     onChangeText={setEditedComment}
                     style={styles.commentInput}
                 />
-                <Pressable onPress={handleConfirm}>
+                <Pressable onPress={handleConfirm} style={styles.confirmContainer}>
                     <Text style={styles.actionText}>Confirm</Text>
                 </Pressable>
             </View>
@@ -100,6 +100,9 @@ const styles = StyleSheet.create({
         marginLeft: 10,
     },
     deleteContainer: {
+        marginRight: 10,
+    },
+    confirmContainer: {
         marginRight: 10,
     },
     commentInput: {
