@@ -22,7 +22,7 @@ export default function Profile() {
   const [showuri,setShowuri]=useState(null)
   const [showLoginModal, setShowLoginModal] = useState(false);
   const [showSignupModal, setShowSignupModal] = useState(false);
-
+  const [loadchange,setLoading]=useState(false)
 
   const openLoginModal = () => {
     setShowLoginModal(true);
@@ -68,7 +68,6 @@ export default function Profile() {
     });
     
     if(loggedIn){
-      console.log('login')
       fetchImageUri();
       console.log('login',showuri)
     } 
@@ -103,6 +102,7 @@ export default function Profile() {
         quality: 1,
       });
       if(result.canceled){
+        setLoading(!loadchange)
         return false}
       if (!result.canceled && result.assets && result.assets.length) {
         setImageUri(result.assets[0].uri);
@@ -127,7 +127,7 @@ export default function Profile() {
           if(imagelink){
             const t = ref(storage,imagelink);
             setTimeout(() => {
-              deleteObject(ref(storage, t._location.path_));}, 10000);
+              deleteObject(ref(storage, t._location.path_));}, 9000);
           }
         }
       }
@@ -142,9 +142,7 @@ export default function Profile() {
       const t=ref(storage, showuri)
       //console.log(t._location.path_)
       deleteObject(ref(storage, t._location.path_));
-      setTimeout(() => {
-        setShowuri(null);
-      }, 2000);
+      setShowuri(null);
     } catch (e) {
       console.error("Failed to delete image URI:", e);
     }
@@ -188,6 +186,7 @@ export default function Profile() {
         pickImage={pickImage} 
         fetchImageUri={fetchImageUri} 
         editImage={editImage}
+        flag={loadchange}
         styles={styles} 
       />
 
