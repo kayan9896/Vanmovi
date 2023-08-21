@@ -73,6 +73,10 @@ export default function Profile() {
     } 
   })
 
+  useEffect(() => {
+    setShowuri(imageUri);
+  }, [imageUri]);
+
   const saveImageUri = async (uri) => {
     try {
       const response= await fetch(uri);
