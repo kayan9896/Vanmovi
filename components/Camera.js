@@ -1,8 +1,8 @@
 import React from 'react';
-import { Image, Pressable, View, Text } from 'react-native';
+import { Image, Pressable, View } from 'react-native';
 import { MaterialIcons } from '@expo/vector-icons';
 
-export default function Camera({ showuri, deleteImage, pickImage, fetchImageUri, styles }) {
+export default function Camera({ showuri, deleteImage, pickImage, fetchImageUri }) {
   return (
     <>
       {console.log(showuri)}
@@ -10,20 +10,20 @@ export default function Camera({ showuri, deleteImage, pickImage, fetchImageUri,
         <>
           <Image source={{ uri: showuri }} style={{ width: 100, height: 100, alignSelf: 'center' }} />
 
-          <View style={styles.buttonRow}>
-            <Pressable style={styles.editDeleteButton} onPress={() => deleteImage(() => pickImage(fetchImageUri))}>
-              <Text style={styles.buttonText}>Edit</Text>
+          <View style={{ flexDirection: 'row', justifyContent: 'center', marginTop: 10 }}>
+            <Pressable onPress={() => deleteImage(() => pickImage(fetchImageUri))}>
+              <MaterialIcons name="edit" size={24} color="dodgerblue" />
             </Pressable>
-            <Pressable style={styles.editDeleteButton} onPress={() => deleteImage(fetchImageUri)}>
-              <Text style={styles.buttonText}>Delete</Text>
+            <Pressable onPress={() => deleteImage(fetchImageUri)} style={{ marginLeft: 20 }}>
+              <MaterialIcons name="delete" size={24} color="dodgerblue" />
             </Pressable>
           </View>
         </>
       ) : (
         <>
           <MaterialIcons name="portrait" size={100} color="deepskyblue" style={{ alignSelf: 'center' }} />
-          <Pressable style={styles.addPortraitButton} onPress={() => pickImage(fetchImageUri)}>
-            <Text style={styles.buttonText}>Add Portrait</Text>
+          <Pressable style={{ alignSelf: 'center', marginTop: 10 }} onPress={() => pickImage(fetchImageUri)}>
+            <MaterialIcons name="add-a-photo" size={24} color="dodgerblue" />
           </Pressable>
         </>
       )}
