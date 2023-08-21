@@ -40,12 +40,12 @@ const CommentItem = ({ i }) => {
             "Do you want to delete this comment?",
             [
                 {
-                    text: "No",
+                    text: "NO",
                     onPress: () => {},
                     style: "cancel"
                 },
                 {
-                    text: "Yes",
+                    text: "YES",
                     onPress: () => {
                         remove('comments', i.id);
                         alert('Comment deleted');
