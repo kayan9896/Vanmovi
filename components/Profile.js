@@ -13,6 +13,8 @@ import Notification from './MovieNotification.js';
 import { ref, uploadBytesResumable,getDownloadURL,deleteObject} from 'firebase/storage';
 import {add,update,remove,get,set} from '../firebase/util.js'
 import { storage } from "../firebase/setup.js";
+import Camera from './Camera';
+
 
 export default function Profile() {
   const [loggedIn, setLoggedIn] = useState(auth.currentUser);
@@ -152,33 +154,13 @@ export default function Profile() {
         <Text style={styles.signOutText}>Log Out</Text>
       </Pressable>
       <Text style={styles.emailText}>{auth.currentUser.email}</Text>
-      {console.log(showuri)}
-      {showuri ? (
-        <>
-          <Image source={{ uri: showuri }} style={{ width: 100, height: 100, alignSelf: 'center' }} />
-
-          <View style={styles.buttonRow}>
-            <Pressable style={styles.editDeleteButton} onPress={function(){deleteImage(()=>pickImage(fetchImageUri))
-            // console.log(imagelink)
-            // console.log(showuri)
-            }}>
-              <Text style={styles.buttonText}>Edit</Text>
-            </Pressable>
-            <Pressable style={styles.editDeleteButton} onPress={function(){
-              deleteImage(fetchImageUri)
-              }}>
-              <Text style={styles.buttonText}>Delete</Text>
-            </Pressable>
-          </View>
-        </>
-      ) : (
-        <>
-          <MaterialIcons name="portrait" size={100} color="deepskyblue" style={{ alignSelf: 'center' }} />
-          <Pressable style={styles.addPortraitButton} onPress={function(){pickImage(fetchImageUri);}}>
-            <Text style={styles.buttonText}>Add Portrait</Text>
-          </Pressable>
-        </>
-      )}
+      <Camera 
+        showuri={showuri} 
+        deleteImage={deleteImage} 
+        pickImage={pickImage} 
+        fetchImageUri={fetchImageUri} 
+        styles={styles} 
+      />
 
       <CommentinPro />
 
@@ -262,8 +244,8 @@ const styles = StyleSheet.create({
   signOutContainer: {
     flexDirection: 'row',
     alignItems: 'center',
-    alignSelf: 'flex-end',  // Ensure it's aligned to the right end
-    marginRight: 10,  // Some margin to the right for spacing
+    alignSelf: 'flex-end',  
+    marginRight: 5,  
   },
   signOutText: {
     color: 'dodgerblue',
