@@ -19,7 +19,7 @@ const HeaderLeft = ({ title }) => {
       headerLeft: () => (
         <View style={{ marginLeft: 10 }}>
           <Pressable onPress={() => navigation.goBack()}>
-            <Ionicons name="arrow-back-circle" size={28} color="yellow" />
+            <Ionicons name="arrow-back-circle" size={29} color="yellow" />
           </Pressable>
         </View>
       ),

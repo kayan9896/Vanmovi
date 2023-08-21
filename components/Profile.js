@@ -217,7 +217,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   addPortraitButton: {
-    width: '60%',
+    width: '50%',
     alignSelf: 'center',
     alignItems: 'center',
     backgroundColor: '#888',

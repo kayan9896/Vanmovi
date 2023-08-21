@@ -26,7 +26,7 @@ const HeaderRight = ({ title, navigation, style }) => {
 
 const styles = StyleSheet.create({
   iconStyle: {
-    marginRight: 10,
+    marginRight: 20,
   },
 });
 
