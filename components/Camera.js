@@ -26,7 +26,7 @@ export default function Camera({ showuri, deleteImage, pickImage, fetchImageUri,
         </>
       ) : (
         <>
-          <MaterialIcons name="portrait" size={100} color="deepskyblue" style={{ alignSelf: 'center' }} />
+          <MaterialIcons name="portrait" size={100} color="turquoise" style={{ alignSelf: 'center' }} />
           {!loading?<Pressable style={{ alignSelf: 'center', marginTop: 10 }} onPress={() => {setLoading(true),pickImage(fetchImageUri)}}>
             <MaterialIcons name="add-a-photo" size={40} color="dodgerblue" />
           </Pressable>:<ActivityIndicator size="large" color="#0000ff" />}
