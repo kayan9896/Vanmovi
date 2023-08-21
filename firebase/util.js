@@ -32,12 +32,12 @@ async function remove(colname,id){
     }
 }
 
-async function update(colname,id){
-    try{
-        const docRef=await updateDoc(doc(db,colname,id))
+async function update(colname, id, data) {
+    try {
+        await updateDoc(doc(db, colname, id), data);
     }
-    catch(e){
-        console.log(e)
+    catch (e) {
+        console.log(e);
     }
 }
 

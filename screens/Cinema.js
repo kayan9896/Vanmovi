@@ -92,7 +92,7 @@ const CinemaItem = ({ i }) => (
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#f0f0f0',
+        backgroundColor: 'lightyellow',
         paddingHorizontal: 10,
     },
     map: {

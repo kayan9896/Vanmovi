@@ -15,7 +15,7 @@ const getTabBarIcon = (route, focused, color) => {
             iconName = focused ? 'movie-filter' : 'movie-filter-outline';
             break;
         case 'Cinemas':
-            iconName = focused ? 'map-marker-account' : 'map-marker-account-outline';
+            iconName = focused ? 'map-marker-radius' : 'map-marker-radius-outline';
             break;
         default:
             iconName = 'question-mark';

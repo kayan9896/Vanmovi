@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Image, Pressable } from 'react-native';
-import { MaterialIcons } from '@expo/vector-icons';
+import { View, Text, Button, StyleSheet, Image, Pressable, Alert } from 'react-native';
+import { Ionicons, Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
 import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -13,6 +13,8 @@ import Notification from './MovieNotification.js';
 import { ref, uploadBytesResumable,getDownloadURL,deleteObject} from 'firebase/storage';
 import {add,update,remove,get,set} from '../firebase/util.js'
 import { storage } from "../firebase/setup.js";
+import Camera from './Camera';
+
 
 export default function Profile() {
   const [loggedIn, setLoggedIn] = useState(auth.currentUser);
@@ -30,6 +32,15 @@ export default function Profile() {
   const openSignupModal = () => {
     setShowSignupModal(true);
     setShowLoginModal(false);
+  };
+
+  const renderUserComments = () => {
+    return (
+      <View style={{ flex: 0.45 }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Comments</Text>
+        <CommentinPro />
+      </View>
+    );
   };
 
   async function fetchImageUri() {
@@ -146,40 +157,21 @@ export default function Profile() {
 
   return (
     <View style={styles.container}>
-      <HeaderLeft title="Detail" />
-      <Text style={styles.emailText}>{auth.currentUser.email}</Text>
-      {console.log(showuri)}
-      {showuri ? (
-        <>
-          <Image source={{ uri: showuri }} style={{ width: 100, height: 100, alignSelf: 'center' }} />
+      <HeaderLeft title="Profile" />
+      <Pressable style={styles.signOutContainer} onPress={() => signOut(auth)}>
+        <Entypo name="log-out" size={24} color="dodgerblue" />
 
-          <View style={styles.buttonRow}>
-            <Pressable style={styles.editDeleteButton} onPress={function(){deleteImage(()=>pickImage(fetchImageUri))
-            // console.log(imagelink)
-            // console.log(showuri)
-            }}>
-              <Text style={styles.buttonText}>Edit</Text>
-            </Pressable>
-            <Pressable style={styles.editDeleteButton} onPress={function(){
-              deleteImage(fetchImageUri)
-              }}>
-              <Text style={styles.buttonText}>Delete</Text>
-            </Pressable>
-          </View>
-        </>
-      ) : (
-        <>
-          <MaterialIcons name="portrait" size={100} color="deepskyblue" style={{ alignSelf: 'center' }} />
-          <Pressable style={styles.addPortraitButton} onPress={function(){pickImage(fetchImageUri);}}>
-            <Text style={styles.buttonText}>Add Portrait</Text>
-          </Pressable>
-        </>
-      )}
-
-      <CommentinPro />
-      <Pressable style={styles.button} onPress={() => signOut(auth)}>
-        <Text style={styles.buttonText}>Sign Out</Text>
       </Pressable>
+      <Text style={styles.emailText}>{auth.currentUser.email}</Text>
+      <Camera 
+        showuri={showuri} 
+        deleteImage={deleteImage} 
+        pickImage={pickImage} 
+        fetchImageUri={fetchImageUri} 
+        styles={styles} 
+      />
+
+      {loggedIn && renderUserComments()}
       <Notification />
     </View>
   );
@@ -188,9 +180,10 @@ export default function Profile() {
 
 const styles = StyleSheet.create({
   container: {
+    marginTop: 0,
     flex: 1,
     padding: 20,
-    backgroundColor: '#f4f4f4',
+    backgroundColor: 'lightyellow',
   },
   button: {
     backgroundColor: 'dodgerblue',
@@ -199,8 +192,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 25,
-    marginTop: 20,
-    width: '50%',
+    marginTop: 10,
+    width: '25%',
     alignSelf: 'center',
     shadowColor: "#000",
     shadowOffset: {
@@ -216,33 +209,9 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  addPortraitButton: {
-    width: '60%',
-    alignSelf: 'center',
-    alignItems: 'center',
-    backgroundColor: '#888',
-    padding: 10,
-    borderRadius: 25,
-    marginTop: 20,
-  },
-  editDeleteButton: {
-    width: '30%',
-    marginTop: 20,
-    marginHorizontal: 15,
-    backgroundColor: '#888', 
-    padding: 10,
-    borderRadius: 25,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  buttonRow: {
-    flexDirection: 'row',
-    justifyContent: 'center',
-    marginTop: 20,
-  },
   infoText: {
     alignSelf: 'center',
-    marginTop: 30,
+    marginTop: 10,
     marginBottom: 10,
     fontSize: 18, 
     fontWeight: 'bold', 
@@ -250,9 +219,22 @@ const styles = StyleSheet.create({
   },
   emailText: {
     alignSelf: 'center',
-    marginTop: 20,
-    fontSize: 16,
-    fontWeight: '500',
+    marginTop: 12,
+    marginBottom: 12,
+    fontSize: 17,
+    fontWeight: 'bold',
     color: '#555',
-  }
+  },
+  signOutContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    alignSelf: 'flex-end',  
+    marginRight: 2,  
+  },
+  signOutText: {
+    color: 'dodgerblue',
+    marginLeft: 5,  // Space between the icon and text
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
 });

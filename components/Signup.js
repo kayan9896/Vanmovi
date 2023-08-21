@@ -93,10 +93,12 @@ const styles = StyleSheet.create({
     borderRadius: 5,
   },
   button: {
+    alignSelf: 'center',
     backgroundColor: 'dodgerblue',
     padding: 10,
     alignItems: 'center',
     borderRadius: 5,
+    width: '50%',
   },
   buttonText: {
     color: 'white',
