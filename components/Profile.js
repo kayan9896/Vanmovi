@@ -103,7 +103,7 @@ export default function Profile() {
         aspect: [4, 3],
         quality: 1,
       });
-
+      if(result.canceled){return false}
       if (!result.canceled && result.assets && result.assets.length) {
         setImageUri(result.assets[0].uri);
         saveImageUri(result.assets[0].uri);
@@ -111,11 +111,30 @@ export default function Profile() {
     } catch (error) {
       console.error("An error occurred:", error);
     }
+    if(callback){
     setTimeout(() => {
       callback();
-    }, 4000);
-  
+    }, 4000);}
+    return true;
   };
+
+  const editImage = async () => {
+    try {
+      const dt = await get('users',auth.currentUser.uid);
+      if(pickImage(fetchImageUri)){
+        if (dt) {
+          let imagelink=dt.image
+          if(imagelink){
+            const t = ref(storage,imagelink);
+            setTimeout(() => {
+              deleteObject(ref(storage, t._location.path_));}, 10000);
+          }
+        }
+      }
+    } catch (e) {
+      console.error("Failed to edit image URI:", e);
+    }
+  }
 
   const deleteImage = async (callback) => {
     try {
@@ -168,6 +187,7 @@ export default function Profile() {
         deleteImage={deleteImage} 
         pickImage={pickImage} 
         fetchImageUri={fetchImageUri} 
+        editImage={editImage}
         styles={styles} 
       />
 
