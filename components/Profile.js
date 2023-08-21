@@ -34,6 +34,15 @@ export default function Profile() {
     setShowLoginModal(false);
   };
 
+  const renderUserComments = () => {
+    return (
+      <View style={{ flex: 0.35 }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Comments</Text>
+        <CommentinPro />
+      </View>
+    );
+  };
+
   async function fetchImageUri() {
       try {
         const dt = await get('users',auth.currentUser.uid);
@@ -162,8 +171,7 @@ export default function Profile() {
         styles={styles} 
       />
 
-      <CommentinPro />
-
+      {loggedIn && renderUserComments()}
       <Notification />
     </View>
   );
@@ -202,13 +210,13 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   addPortraitButton: {
-    width: '30%',
+    width: '35%',
     alignSelf: 'center',
     alignItems: 'center',
     backgroundColor: '#888',
     padding: 10,
     borderRadius: 25,
-    marginTop: 20,
+    marginTop: 10,
   },
   editDeleteButton: {
     width: '20%',
@@ -223,7 +231,7 @@ const styles = StyleSheet.create({
   buttonRow: {
     flexDirection: 'row',
     justifyContent: 'center',
-    marginTop: 20,
+    marginTop: 10,
   },
   infoText: {
     alignSelf: 'center',
@@ -235,17 +243,17 @@ const styles = StyleSheet.create({
   },
   emailText: {
     alignSelf: 'center',
-    marginTop: 20,
-    marginBottom: 10,
-    fontSize: 16,
-    fontWeight: '500',
+    marginTop: 12,
+    marginBottom: 12,
+    fontSize: 17,
+    fontWeight: 'bold',
     color: '#555',
   },
   signOutContainer: {
     flexDirection: 'row',
     alignItems: 'center',
     alignSelf: 'flex-end',  
-    marginRight: 5,  
+    marginRight: 2,  
   },
   signOutText: {
     color: 'dodgerblue',

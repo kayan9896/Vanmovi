@@ -1,8 +1,8 @@
-import { View, Text,FlatList,StyleSheet,Pressable } from 'react-native'
-import React,{useEffect} from 'react'
-import { collection, onSnapshot, query, where } from 'firebase/firestore'
+import { View, Text, FlatList, StyleSheet, Pressable } from 'react-native';
+import React, { useEffect } from 'react';
+import { collection, onSnapshot, query, where } from 'firebase/firestore';
 import { auth } from '../firebase/setup.js';
-import { db } from '../firebase/setup.js'
+import { db } from '../firebase/setup.js';
 import { remove } from '../firebase/util.js';
 
 export default function CommentinPro() {
@@ -14,32 +14,42 @@ export default function CommentinPro() {
         })
         return () => { dt() };
       }, []);
-  return (
-    <View>
-       <FlatList data={cm} renderItem={({ item }) => <CommentItem i={item} />}/>
-    </View>
-  )
+    return (
+        <View>
+            <FlatList data={cm} renderItem={({ item }) => <CommentItem i={item} />}/>
+        </View>
+    )
 }
 
 const CommentItem = ({ i }) => (
-    <View>
-    <Pressable onPress={function () {
-        remove('comments', i.id)
-        alert('comment deleted');
-        }   
-    }>
-        <Text>X</Text>
-    </Pressable>
-    <Text style={styles.commentText}>{i.cm} from {i.mv}</Text>
+    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <View style={{ flex: 1 }}>
+            <Text style={styles.commentText}>{i.cm} from {i.mv}</Text>
+        </View>
+        <Pressable onPress={function () { alert('Edit comment'); }}>
+            <Text style={styles.actionText}>Edit</Text>
+        </Pressable>
+        <Pressable onPress={function () {
+                remove('comments', i.id)
+                alert('comment deleted');
+            }
+        }>
+            <Text style={styles.actionText}>Delete</Text>
+        </Pressable>
     </View>
-  );
-  const styles = StyleSheet.create({
+);
+
+const styles = StyleSheet.create({
     commentText: {
-      fontSize: 16,
-      color: '#444',
-      marginBottom: 10,
-      padding: 10,
-      backgroundColor: 'rgba(0,0,0,0.05)',
-      borderRadius: 5,
+        fontSize: 15,
+        color: '#444',
+        marginBottom: 10,
+        padding: 10,
+        backgroundColor: 'rgba(0,0,0,0.05)',
+        borderRadius: 5,
+    },
+    actionText: {
+        color: 'dodgerblue',
+        marginLeft: 10, 
     }
-  })
+});
