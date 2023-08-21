@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Image, Pressable } from 'react-native';
-import { MaterialIcons, Ionicons } from '@expo/vector-icons';
+import { View, Text, Button, StyleSheet, Image, Pressable, Alert } from 'react-native';
+import { Ionicons, Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
 import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -159,8 +159,8 @@ export default function Profile() {
     <View style={styles.container}>
       <HeaderLeft title="Profile" />
       <Pressable style={styles.signOutContainer} onPress={() => signOut(auth)}>
-        <Ionicons name="log-out" size={24} color="dodgerblue" />
-        <Text style={styles.signOutText}>Log Out</Text>
+        <Entypo name="log-out" size={24} color="dodgerblue" />
+
       </Pressable>
       <Text style={styles.emailText}>{auth.currentUser.email}</Text>
       <Camera 
@@ -184,6 +184,25 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: 'lightyellow',
+  },
+  button: {
+    backgroundColor: 'dodgerblue',
+    paddingVertical: 15,
+    paddingHorizontal: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+    borderRadius: 25,
+    marginTop: 10,
+    width: '25%',
+    alignSelf: 'center',
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5,
   },
   buttonText: {
     color: 'white',
