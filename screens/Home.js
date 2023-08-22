@@ -22,18 +22,18 @@ export default function Home({ navigation }) {
     return likedMovies.includes(movieId);
   };
 
-const toggleLike = (movieID) => {
-  setLikedMovies(prevLikedMovies => {
-    const newLikedMovies = new Set([...prevLikedMovies]);
-    if (newLikedMovies.has(movieID)) {
-      newLikedMovies.delete(movieID);
-    } else {
-      newLikedMovies.add(movieID);
-    }
-    return newLikedMovies;
-  });
-}
-
+  const toggleLike = (movieID) => {
+    setLikedMovies(prevLikedMovies => {
+      const newLikedMovies = new Set([...prevLikedMovies]);
+      if (newLikedMovies.has(movieID)) {
+        newLikedMovies.delete(movieID);
+      } else {
+        newLikedMovies.add(movieID);
+      }
+      return newLikedMovies;
+    });
+  }
+  
 
   useEffect(function () {
     async function fetchGenres() {
@@ -108,16 +108,7 @@ const toggleLike = (movieID) => {
       <Button title="NTFY: Movie Recommend" onPress={handleTestNotification} />
       <FlatList 
         data={data} 
-        renderItem={(i) => { 
-          return (
-            <Item 
-              info={i.item} 
-              navigation={navigation} 
-              isLiked={isMovieLiked(i.item.id)} 
-              toggleLike={toggleLike} 
-            />
-          );
-        }} 
+        renderItem={(i) => <Item info={i.item} likedMovies={likedMovies} toggleLike={toggleLike} />} 
       />
     </View>
   );
