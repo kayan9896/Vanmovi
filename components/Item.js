@@ -27,9 +27,10 @@ export default function Item({ info, toggleLike }) {
         <AntDesign 
           name={info.isLiked ? "star" : "staro"} 
           size={24} 
-          color={info.isLiked ? "yellow" : "gray"} 
-          onPress={handleIconPress} 
-          style={{ marginVertical: 2 }}
+          color={"dodgerblue"} 
+          onPress={() => toggleLike(info.id, info.name)} 
+          marginTop={2}
+          marginBottom={2}
         />
         <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">{info.name}</Text>
 
