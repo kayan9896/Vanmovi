@@ -15,6 +15,7 @@ import {add,update,remove,get,set} from '../firebase/util.js'
 import { storage } from "../firebase/setup.js";
 import Camera from './Camera';
 import Item from '../components/Item';
+import { ScrollView } from 'react-native';
 
 
 export default function Profile({ navigation }) {
@@ -59,7 +60,7 @@ export default function Profile({ navigation }) {
 
   const renderUserComments = () => {
     return (
-      <View style={{ height: '30%' }}>
+      <View style={{ height: '25%' }}>
         <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Comments</Text>
         <CommentinPro />
       </View>
@@ -69,7 +70,7 @@ export default function Profile({ navigation }) {
   const renderLikedMovies = () => {
     return (
       <View style={{ height: '30%' }}>
-        <Text>My Liked Movies</Text>
+        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20, marginBottom: 10 }}>My Liked Movies</Text>
         <FlatList 
           data={likedMovies} 
           renderItem={(i) => { 
@@ -191,7 +192,7 @@ export default function Profile({ navigation }) {
       console.log("pickFromGallery: Image Picker Result:", result);  // After async call    
 
       if (result.canceled) {
-        console.log("pickFromGallery: Operation was cancelled");  // 3
+        console.log("pickFromGallery: Operation was canceled");  // 3
         setLoading(!loadchange);
         return false;
       }      
@@ -274,7 +275,6 @@ export default function Profile({ navigation }) {
       <HeaderLeft title="Profile" />
       <Pressable style={styles.signOutContainer} onPress={() => signOut(auth)}>
         <Entypo name="log-out" size={24} color="dodgerblue" />
-
       </Pressable>
       <Text style={styles.emailText}>{auth.currentUser.email}</Text>
       <Camera 

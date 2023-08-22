@@ -17,25 +17,37 @@ export default function Home({ navigation }) {
     
     try {
       const movieData = await get("movies", movieID);
+      console.log('Fetched movie data:', movieData); // Let's see what's being fetched
+
       if (movieData) {
         if (likedMovies.has(movieID)) {
+          console.log('Movie is liked. Attempting to remove...');
+
           setLikedMovies(prev => {
             prev.delete(movieID);
             return new Set([...prev]);
           });
           await remove(moviePath, movieID);
+          console.log('Movie removed successfully');
         } else {
+          console.log('Movie is not liked. Attempting to add...');
+
           setLikedMovies(prev => new Set([...prev, movieID]));
           await set("movies", { id: moviePath, movieID: movieID, name: movieName });
+          console.log('Movie added successfully');
         }
       } else {
+        console.log('Movie data not found. Attempting to add...');
+
         setLikedMovies(prev => new Set([...prev, movieID]));
         await add("movies", { movieID: movieID, name: movieName });
+        console.log('Movie added successfully');
       }
     } catch (error) {
-      console.log(error);
+      console.log('Error in toggleLike:', error);
     }
   };
+
 
   useEffect(() => {
     if (auth.currentUser) {

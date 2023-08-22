@@ -11,6 +11,7 @@ export default function Item({ info, toggleLike }) {
   const navigation = useNavigation();
   const handleIconPress = () => {
     if (auth.currentUser) {
+      console.log(`Toggling like for movie with ID: ${info.id} and name: ${info.name}`);
       toggleLike(info.id);
     } else {
       navigation.navigate('Profile');
