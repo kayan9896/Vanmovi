@@ -147,7 +147,7 @@ export default function Profile() {
       console.log("pickFromGallery: Image Picker Result:", result);  // After async call    
 
       if (result.canceled) {
-        console.log("pickFromGallery: Operation was cancelled");  // 3
+        console.log("pickFromGallery: Operation was canceled");  // 3
         setLoading(!loadchange);
         return false;
       }      
