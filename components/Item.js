@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import calendar from '../images/calendar.png';
@@ -7,8 +7,7 @@ import time from '../images/time.png';
 import { Ionicons, AntDesign } from '@expo/vector-icons';
 import { auth } from '../firebase/setup';
 
-
-export default function Item({ info, likedMovies, toggleLike }) {
+export default function Item({ info, toggleLike }) {
   const navigation = useNavigation();
   const handleIconPress = () => {
     if (auth.currentUser) {
@@ -25,16 +24,14 @@ export default function Item({ info, likedMovies, toggleLike }) {
         source={{ uri: `https://image.tmdb.org/t/p/w500/${info.poster_path}` }}
       />
       <View style={styles.details}>
-      <AntDesign 
+        <AntDesign 
           name={info.isLiked ? "star" : "staro"} 
           size={24} 
           color={info.isLiked ? "yellow" : "gray"} 
-          onPress={() => toggleLike(info.id)} 
-          marginTop={2}
-          marginBottom={2}
+          onPress={handleIconPress} 
+          style={{ marginVertical: 2 }}
         />
         <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">{info.name}</Text>
-
 
         <View style={styles.row}>
           <Image source={calendar} style={styles.icon} />
