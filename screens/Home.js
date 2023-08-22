@@ -1,13 +1,36 @@
 import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Item from '../components/Item';
 import HeaderRight from '../components/HeaderRight';
 import * as Notifications from "expo-notifications";
+import { auth } from '../firebase/setup';
 
 export default function Home({ navigation }) {
   const [data, setData] = React.useState([]);
   const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1'; //Just for test
   const genresMap = new Map(); 
+  
+  const [likedMovies, setLikedMovies] = useState([]);
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      // Fetch liked movies from Firebase using `auth.currentUser.uid` and populate likedMovies.
+    }
+  }, []);
+
+  const isMovieLiked = (movieId) => {
+    return likedMovies.includes(movieId);
+  };
+
+  const toggleLike = (movieId) => {
+    if (likedMovies.includes(movieId)) {
+      setLikedMovies((prev) => prev.filter(id => id !== movieId));
+      // Remove movieId from Firebase 'likedMovies' collection for this user.
+    } else {
+      setLikedMovies((prev) => [...prev, movieId]);
+      // Add movieId to Firebase 'likedMovies' collection for this user.
+    }
+  };
 
   useEffect(function () {
     async function fetchGenres() {
@@ -80,7 +103,19 @@ export default function Home({ navigation }) {
       <HeaderRight title="VanMovie" navigation={navigation} />
       <Text style={styles.title}>What's new!</Text>
       <Button title="NTFY: Movie Recommend" onPress={handleTestNotification} />
-      <FlatList data={data} renderItem={(i) => { return <Item info={i.item} /> }} />
+      <FlatList 
+        data={data} 
+        renderItem={(i) => { 
+          return (
+            <Item 
+              info={i.item} 
+              navigation={navigation} 
+              isLiked={isMovieLiked(i.item.id)} 
+              toggleLike={toggleLike} 
+            />
+          );
+        }} 
+      />
     </View>
   );
 }

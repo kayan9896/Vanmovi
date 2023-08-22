@@ -5,10 +5,8 @@ import calendar from '../images/calendar.png';
 import genre from '../images/genre.png';  
 import time from '../images/time.png'; 
 import { Ionicons, AntDesign } from '@expo/vector-icons';
-import { auth } from '../firebase/setup';
 
-
-export default function Item({ info, likedMovies, toggleLike }) {
+export default function Item({ info, isLiked, toggleLike }) {
   const navigation = useNavigation();
   const handleIconPress = () => {
     if (auth.currentUser) {
@@ -26,10 +24,10 @@ export default function Item({ info, likedMovies, toggleLike }) {
       />
       <View style={styles.details}>
       <AntDesign 
-          name={info.isLiked ? "star" : "staro"} 
+          name={isLiked ? 'star' : 'staro'} 
+          color={'dodgerblue'} 
           size={24} 
-          color={info.isLiked ? "yellow" : "gray"} 
-          onPress={() => toggleLike(info.id)} 
+          onPress={handleIconPress} 
           marginTop={2}
           marginBottom={2}
         />
