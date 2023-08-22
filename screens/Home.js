@@ -10,7 +10,7 @@ export default function Home({ navigation }) {
   const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1'; //Just for test
   const genresMap = new Map(); 
   
-  const [likedMovies, setLikedMovies] = useState([]);
+  const [likedMovies, setLikedMovies] = useState(new Set());
 
   useEffect(() => {
     if (auth.currentUser) {
@@ -22,15 +22,18 @@ export default function Home({ navigation }) {
     return likedMovies.includes(movieId);
   };
 
-  const toggleLike = (movieId) => {
-    if (likedMovies.includes(movieId)) {
-      setLikedMovies((prev) => prev.filter(id => id !== movieId));
-      // Remove movieId from Firebase 'likedMovies' collection for this user.
+const toggleLike = (movieID) => {
+  setLikedMovies(prevLikedMovies => {
+    const newLikedMovies = new Set([...prevLikedMovies]);
+    if (newLikedMovies.has(movieID)) {
+      newLikedMovies.delete(movieID);
     } else {
-      setLikedMovies((prev) => [...prev, movieId]);
-      // Add movieId to Firebase 'likedMovies' collection for this user.
+      newLikedMovies.add(movieID);
     }
-  };
+    return newLikedMovies;
+  });
+}
+
 
   useEffect(function () {
     async function fetchGenres() {
