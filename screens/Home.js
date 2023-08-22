@@ -23,17 +23,18 @@ export default function Home({ navigation }) {
   };
 
   const toggleLike = (movieID) => {
-    setLikedMovies(prevLikedMovies => {
-      const newLikedMovies = new Set([...prevLikedMovies]);
-      if (newLikedMovies.has(movieID)) {
-        newLikedMovies.delete(movieID);
-      } else {
-        newLikedMovies.add(movieID);
-      }
-      return newLikedMovies;
+    setData(prevData => {
+        return prevData.map(movie => {
+            if (movie.id === movieID) {
+                return {
+                    ...movie,
+                    isLiked: !movie.isLiked
+                };
+            }
+            return movie;
+        });
     });
-  }
-  
+};
 
   useEffect(function () {
     async function fetchGenres() {
@@ -70,7 +71,7 @@ export default function Home({ navigation }) {
         const json = await response.json();
         const detailsPromises = json.results.map(fetchMovieDetails);
         const detailedMovies = await Promise.all(detailsPromises);
-        setData(detailedMovies);
+        setData(detailedMovies.map(movie => ({ ...movie, isLiked: false })));
       } catch (e) {
         console.log(e);
       }
