@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Image, Pressable, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, Pressable, Alert, FlatList } from 'react-native';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -59,7 +59,7 @@ export default function Profile({ navigation }) {
 
   const renderUserComments = () => {
     return (
-      <View style={{ flex: 0.35 }}>
+      <View style={{ height: '30%' }}>
         <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Comments</Text>
         <CommentinPro />
       </View>
@@ -289,7 +289,7 @@ export default function Profile({ navigation }) {
       />
 
       {loggedIn && renderUserComments()}
-      {loggedIn && renderUserComments()}
+      {loggedIn && renderLikedMovies()}
       <Notification />
     </View>
   );
