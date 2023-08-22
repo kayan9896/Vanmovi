@@ -94,26 +94,28 @@ export default function Profile() {
   const pickImage = async (callback) => {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
-
       if (status !== 'granted') {
         alert('Sorry, we need camera permissions to make this work!');
+        setLoading(false);
         return;
       }
-
       const result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
-      });
-      if(result.canceled){
-        setLoading(!loadchange)
-        return false}
+      });      
+      if (result.canceled) {
+        setLoading(!loadchange);
+        return false;
+      }      
       if (!result.canceled && result.assets && result.assets.length) {
         setImageUri(result.assets[0].uri);
         saveImageUri(result.assets[0].uri);
-      }
+        setShowuri(result.assets[0].uri);
+      }      
     } catch (error) {
       console.error("An error occurred:", error);
+      setLoading(false);
     }
     if(callback){
     setTimeout(() => {
@@ -121,6 +123,53 @@ export default function Profile() {
     }, 4000);}
     return true;
   };
+
+
+  const pickFromGallery = async (callback) => {
+    console.log("pickFromGallery: Started");  // 1
+    try {
+      console.log("pickFromGallery: Requesting Media Library Permissions");  // 2
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      console.log("pickFromGallery: Permissions Status:", status);   // After async call
+      
+      if (status !== 'granted') {
+        alert('Sorry, we need gallery permissions to make this work!');
+        setLoading(false);
+        return;
+      }
+
+      console.log("pickFromGallery: Launching Image Library");  // 2
+      const result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        aspect: [4, 3],
+        quality: 1,
+      });
+      console.log("pickFromGallery: Image Picker Result:", result);  // After async call    
+
+      if (result.canceled) {
+        console.log("pickFromGallery: Operation was cancelled");  // 3
+        setLoading(!loadchange);
+        return false;
+      }      
+      if (!result.canceled && result.assets && result.assets.length) {
+        console.log("pickFromGallery: Image picked and setting URI");  // 3
+        setImageUri(result.assets[0].uri);
+        saveImageUri(result.assets[0].uri);
+        setShowuri(result.assets[0].uri);
+      }      
+    } catch (error) {
+      console.error("An error occurred:", error);
+      setLoading(false);
+    }
+    if(callback){
+      console.log("pickFromGallery: Invoking callback after delay");  // Before invoking callback
+      setTimeout(() => {
+        callback();
+      }, 4000);}
+    console.log("pickFromGallery: Completed");  // 1    
+    return true;
+  };
+  
 
   const editImage = async () => {
     try {
@@ -145,7 +194,7 @@ export default function Profile() {
       remove('users',auth.currentUser.uid)
       const t=ref(storage, showuri)
       //console.log(t._location.path_)
-      deleteObject(ref(storage, t._location.path_));
+      await deleteObject(ref(storage, t._location.path_));
       setShowuri(null);
     } catch (e) {
       console.error("Failed to delete image URI:", e);
@@ -192,6 +241,7 @@ export default function Profile() {
         editImage={editImage}
         flag={loadchange}
         styles={styles} 
+        pickFromGallery={pickFromGallery}
       />
 
       {loggedIn && renderUserComments()}
@@ -216,7 +266,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 25,
     marginTop: 10,
-    width: '25%',
+    width: '50%',
     alignSelf: 'center',
     shadowColor: "#000",
     shadowOffset: {
@@ -256,7 +306,7 @@ const styles = StyleSheet.create({
   },
   signOutText: {
     color: 'dodgerblue',
-    marginLeft: 5,  // Space between the icon and text
+    marginLeft: 5,
     fontSize: 16,
     fontWeight: 'bold',
   },
