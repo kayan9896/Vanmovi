@@ -1,12 +1,22 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { View, Text, Pressable, Image, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import calendar from '../images/calendar.png';
 import genre from '../images/genre.png';  
 import time from '../images/time.png'; 
+import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { auth } from '../firebase/setup';
 
-export default function Item({ info }) {
+
+export default function Item({ info, likedMovies, toggleLike }) {
   const navigation = useNavigation();
+  const handleIconPress = () => {
+    if (auth.currentUser) {
+      toggleLike(info.id);
+    } else {
+      navigation.navigate('Profile');
+    }
+  };
 
   return (
     <Pressable style={styles.container} onPress={() => { navigation.navigate('Detail', { info: info }) }}>
@@ -15,7 +25,16 @@ export default function Item({ info }) {
         source={{ uri: `https://image.tmdb.org/t/p/w500/${info.poster_path}` }}
       />
       <View style={styles.details}>
+      <AntDesign 
+          name={info.isLiked ? "star" : "staro"} 
+          size={24} 
+          color={info.isLiked ? "yellow" : "gray"} 
+          onPress={() => toggleLike(info.id)} 
+          marginTop={2}
+          marginBottom={2}
+        />
         <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">{info.name}</Text>
+
 
         <View style={styles.row}>
           <Image source={calendar} style={styles.icon} />
