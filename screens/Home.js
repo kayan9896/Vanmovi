@@ -17,7 +17,7 @@ export default function Home({ navigation }) {
     
     try {
       const movieData = await get("movies", movieID);
-      console.log('Fetched movie data:', movieData); // Let's see what's being fetched
+      console.log('Fetched movie data:', movieData); 
 
       if (movieData) {
         if (likedMovies.has(movieID)) {
