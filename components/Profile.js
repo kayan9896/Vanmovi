@@ -207,12 +207,12 @@ export default function Profile({ navigation }) {
         <HeaderLeft title="Profile" />
 
         <Text style={styles.infoText}>Are you an existing user?</Text>
-        <Pressable style={Style.button} onPress={openLoginModal}>
+        <Pressable style={[Style.button, { width: '50%' }]} onPress={openLoginModal}>
           <Text style={Style.buttonText}>Log In</Text>
         </Pressable>
 
         <Text style={styles.infoText}>Are you a new user?</Text>
-        <Pressable style={[Style.button, { marginTop: 10 }]} onPress={openSignupModal}>
+        <Pressable style={[Style.button, { width: '50%' }]} onPress={openSignupModal}>
           <Text style={Style.buttonText}>Sign Up</Text>
         </Pressable>
 

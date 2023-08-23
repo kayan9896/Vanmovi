@@ -3,8 +3,6 @@ import { Text, FlatList, StyleSheet, Button, Pressable } from 'react-native';
 import Item from '../components/Item';
 import HeaderRight from '../components/HeaderRight';
 import * as Notifications from "expo-notifications";
-import { auth } from '../firebase/setup'; 
-import { add, remove, get, set } from '../firebase/util';
 import Color from '../components/Color';
 import Style from '../components/Style';
 import { LinearGradient } from 'expo-linear-gradient';
@@ -91,7 +89,7 @@ export default function Home({ navigation }) {
       <HeaderRight title="VanMovie" navigation={navigation} />
       <Text style={styles.title}>What's new!</Text>
       {/* <Button title="NTFY: Movie Recommendation" onPress={handleTestNotification} /> */}
-      <Pressable style={Style.button} onPress={handleTestNotification}>
+      <Pressable style={[Style.button, Style.buttonDefaultWidth]} onPress={handleTestNotification}>
         <Text style={Style.buttonText}>NTFY: Movie Recommendation</Text>
       </Pressable>
 

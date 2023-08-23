@@ -9,7 +9,6 @@ export default Style = {
         justifyContent: 'center',
         borderRadius: 25,
         marginTop: 10,
-        width: '75%',
         alignSelf: 'center',
         shadowColor: "#000",
         shadowOffset: {
@@ -19,6 +18,9 @@ export default Style = {
         shadowOpacity: 0.25,
         shadowRadius: 3.84,
         elevation: 5,
+    },
+    buttonDefaultWidth: {
+        width: '75%',
     },
     buttonText: {
         color: 'white',

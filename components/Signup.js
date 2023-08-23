@@ -51,7 +51,7 @@ export default function Signup({ fail }) {
         onChangeText={(newText) => setConfirmPassword(newText)}
       />
       <Pressable
-        style={Style.button}
+        style={[Style.button, { width: '50%' }]}
         onPress={function () {
           if (password !== confirmPassword) {
             alert('Passwords do not match');
