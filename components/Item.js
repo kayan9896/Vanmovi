@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import calendar from '../images/calendar.png';
 import genre from '../images/genre.png';  
 import time from '../images/time.png'; 
-import { Ionicons, AntDesign } from '@expo/vector-icons';
+import { AntDesign } from '@expo/vector-icons';
 import { auth } from '../firebase/setup';
 
 export default function Item({ info, toggleLike }) {
@@ -12,7 +12,7 @@ export default function Item({ info, toggleLike }) {
   const handleIconPress = () => {
     if (auth.currentUser) {
       console.log(`Toggling like for movie with ID: ${info.id} and name: ${info.name}`);
-      toggleLike(info.id);
+      toggleLike(info.id, info.name);
     } else {
       navigation.navigate('Profile');
     }
@@ -29,10 +29,11 @@ export default function Item({ info, toggleLike }) {
           name={info.isLiked ? "star" : "staro"} 
           size={24} 
           color={"dodgerblue"} 
-          onPress={() => toggleLike(info.id, info.name)} 
+          onPress={handleIconPress} 
           marginTop={2}
           marginBottom={2}
         />
+
         <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">{info.name}</Text>
 
         <View style={styles.row}>
