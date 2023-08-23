@@ -1,6 +1,6 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
 import React from 'react';
-import { add, remove,set } from '../firebase/util.js';
+import { add, set } from '../firebase/util.js';
 import { auth } from '../firebase/setup.js';
 
 export default function Input({ mvname, loggedIn, changepop }) {
@@ -18,16 +18,7 @@ export default function Input({ mvname, loggedIn, changepop }) {
         {text}
       </TextInput>
       <Pressable
-        style={{
-          backgroundColor: 'dodgerblue',
-          alignItems: 'center',
-          marginHorizontal: 60,
-          paddingVertical: 10, 
-          borderRadius: 5, 
-          marginTop: 10, 
-          width: '30%',
-          alignSelf: 'center',
-        }}
+        style={[Style.button, { width: '50%' }]}
         onPress={function () {
           if (loggedIn) {
             add('comments', { cm: text, mv: mvname, user: auth.currentUser.uid });

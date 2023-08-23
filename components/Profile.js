@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Image, Pressable, Alert, FlatList } from 'react-native';
-import { Ionicons, Entypo } from '@expo/vector-icons';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
 import { onAuthStateChanged, signOut } from 'firebase/auth';
@@ -207,12 +207,12 @@ export default function Profile({ navigation }) {
         <HeaderLeft title="Profile" />
 
         <Text style={styles.infoText}>Are you an existing user?</Text>
-        <Pressable style={Style.button} onPress={openLoginModal}>
+        <Pressable style={[Style.button, { width: '50%' }]} onPress={openLoginModal}>
           <Text style={Style.buttonText}>Log In</Text>
         </Pressable>
 
         <Text style={styles.infoText}>Are you a new user?</Text>
-        <Pressable style={[Style.button, { marginTop: 10 }]} onPress={openSignupModal}>
+        <Pressable style={[Style.button, { width: '50%' }]} onPress={openSignupModal}>
           <Text style={Style.buttonText}>Sign Up</Text>
         </Pressable>
 

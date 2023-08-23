@@ -24,7 +24,7 @@ export default function Login({ fail }) {
         value={password}
         onChangeText={(newText) => setPassword(newText)}
       />
-      <Pressable style={Style.button} onPress={function () {
+      <Pressable style={[Style.button, { width: '50%' }]} onPress={function () {
         async function login() {
           try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
