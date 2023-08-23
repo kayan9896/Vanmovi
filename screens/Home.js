@@ -156,5 +156,4 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
     color: '#333',
   },
-  button: Style.Button,  
 });

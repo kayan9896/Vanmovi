@@ -9,7 +9,7 @@ export default Style = {
         justifyContent: 'center',
         borderRadius: 25,
         marginTop: 10,
-        width: '80%',
+        width: '75%',
         alignSelf: 'center',
         shadowColor: "#000",
         shadowOffset: {
