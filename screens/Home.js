@@ -10,7 +10,6 @@ import Style from '../components/Style';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-
 export default function Home({ navigation }) {
   const [data, setData] = useState([]);
   const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1';
@@ -109,7 +108,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'lightyellow',
   },
   title: {
     fontSize: 24,

@@ -8,6 +8,9 @@ import { onAuthStateChanged } from "firebase/auth";
 import { auth } from '../firebase/setup.js';
 import HeaderLeft from '../components/HeaderLeft';
 import CommentItem from '../components/CommentItem.js';
+import Color from '../components/Color';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 export default function Detail({ route }) {
   const [cms, setCms] = React.useState([]);
@@ -29,7 +32,9 @@ export default function Detail({ route }) {
   }, []);
 
   return (
-    <View style={styles.container}>
+    <LinearGradient 
+      colors={[Color.gradientStart, Color.gradientEnd, Color.gradientFinal]}
+      style={styles.container}>
       <HeaderLeft title="Detail" />
       <Popup vis={pop} changevis={setPop} />
       <FlatList
@@ -51,7 +56,7 @@ export default function Detail({ route }) {
         renderItem={({ item }) => <CommentItem comment={item.cm} user={item.user || "Anonymous"} />}
         keyExtractor={(item, index) => index.toString()}
       />
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -66,7 +71,6 @@ const CommentSection = () => (
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#f0f0f0',
   },
   poster: {
     width: '100%',
@@ -74,7 +78,6 @@ const styles = StyleSheet.create({
   },
   details: {
     padding: 20,
-    backgroundColor: '#fff',
   },
   title: {
     fontSize: 28,
@@ -90,7 +93,6 @@ const styles = StyleSheet.create({
   },
   comments: {
     padding: 20,
-    backgroundColor: '#fff',
   },
   commentsTitle: {
     fontSize: 22,
