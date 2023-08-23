@@ -118,10 +118,6 @@ export default function Profile({ navigation }) {
     } 
   })
 
-  useEffect(() => {
-    setShowuri(imageUri);
-  }, [imageUri]);
-
   const saveImageUri = async (uri) => {
     try {
       const response= await fetch(uri);
@@ -156,7 +152,6 @@ export default function Profile({ navigation }) {
       if (!result.canceled && result.assets && result.assets.length) {
         setImageUri(result.assets[0].uri);
         saveImageUri(result.assets[0].uri);
-        setShowuri(result.assets[0].uri);
       }      
     } catch (error) {
       console.error("An error occurred:", error);
@@ -199,7 +194,6 @@ export default function Profile({ navigation }) {
 
         setImageUri(result.assets[0].uri);
         saveImageUri(result.assets[0].uri);
-        setShowuri(result.assets[0].uri);
       } 
 
     } catch (error) {
