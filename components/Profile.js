@@ -15,7 +15,10 @@ import {add,update,remove,get,set} from '../firebase/util.js'
 import { storage } from "../firebase/setup.js";
 import Camera from './Camera';
 import Item from '../components/Item';
-import { ScrollView } from 'react-native';
+import MovieinPro from '../components/MovieinPro.js';
+import Color from '../components/Color.js';
+import Style from '../components/Style.js';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export default function Profile({ navigation }) {
@@ -67,23 +70,11 @@ export default function Profile({ navigation }) {
     );
   };
 
-  const renderLikedMovies = () => {
+  const renderUserMovies = () => {
     return (
-      <View style={{ height: '30%' }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20, marginBottom: 10 }}>My Liked Movies</Text>
-        <FlatList 
-          data={likedMovies} 
-          renderItem={(i) => { 
-            return (
-              <Item 
-                info={i.item} 
-                navigation={navigation} 
-                isLiked={isMovieLiked(i.item.id)} 
-                toggleLike={toggleLike} 
-              />
-            );
-          }} 
-        />
+      <View style={{ height: '25%' }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Liked Movies</Text>
+        <MovieinPro />
       </View>
     );
   };
@@ -243,27 +234,31 @@ export default function Profile({ navigation }) {
 
   if (!loggedIn) {
     return (
-      <View style={styles.container}>
+      <LinearGradient 
+      colors={[Color.gradientStart, Color.gradientEnd, Color.gradientFinal]}
+      style={styles.container}>
         <HeaderLeft title="Profile" />
 
         <Text style={styles.infoText}>Are you an existing user?</Text>
-        <Pressable style={styles.button} onPress={openLoginModal}>
-          <Text style={styles.buttonText}>Log In</Text>
+        <Pressable style={Style.button} onPress={openLoginModal}>
+          <Text style={Style.buttonText}>Log In</Text>
         </Pressable>
 
         <Text style={styles.infoText}>Are you a new user?</Text>
-        <Pressable style={[styles.button, { marginTop: 10 }]} onPress={openSignupModal}>
-          <Text style={styles.buttonText}>Sign Up</Text>
+        <Pressable style={[Style.button, { marginTop: 10 }]} onPress={openSignupModal}>
+          <Text style={Style.buttonText}>Sign Up</Text>
         </Pressable>
 
         {showLoginModal && <Login fail={setShowLoginModal} />}
         {showSignupModal && <Signup fail={setShowSignupModal} />}
-      </View>
+      </LinearGradient>
     );
   }
 
   return (
-    <View style={styles.container}>
+    <LinearGradient 
+      colors={[Color.gradientStart, Color.gradientEnd, Color.gradientFinal]}
+      style={styles.container}>
       <HeaderLeft title="Profile" />
       <Pressable style={styles.signOutContainer} onPress={() => signOut(auth)}>
         <Entypo name="log-out" size={24} color="dodgerblue" />
@@ -281,9 +276,9 @@ export default function Profile({ navigation }) {
       />
 
       {loggedIn && renderUserComments()}
-      {loggedIn && renderLikedMovies()}
+      {loggedIn && renderUserMovies()}
       <Notification />
-    </View>
+    </LinearGradient>
   );
 }
 
@@ -294,30 +289,6 @@ const styles = StyleSheet.create({
     flex: 1,
     padding: 20,
     backgroundColor: 'lightyellow',
-  },
-  button: {
-    backgroundColor: 'dodgerblue',
-    paddingVertical: 15,
-    paddingHorizontal: 20,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderRadius: 25,
-    marginTop: 10,
-    width: '50%',
-    alignSelf: 'center',
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
-  },
-  buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
-    fontSize: 16,
   },
   infoText: {
     alignSelf: 'center',

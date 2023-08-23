@@ -10,17 +10,20 @@ async function add(colname,item){
     }
 }
 
-async function get(colname,id){
-    try{
-        const docRef=await getDoc(doc(db,colname,id))
-        const dt=docRef.data()
-        return dt
-
-    }
-    catch(e){
-        console.log(e)
+async function get(colname, id) {
+    try {
+        const docRef = await getDoc(doc(db, colname, id));
+        if (docRef.exists()) {
+            return docRef.data();
+        } else {
+            console.log("No document found with given ID");
+            return null;
+        }
+    } catch (e) {
+        console.log(e);
     }
 }
+
 
 
 async function remove(colname,id){

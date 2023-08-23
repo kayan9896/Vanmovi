@@ -2,6 +2,7 @@ import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 import { auth } from '../firebase/setup.js';
 import { signInWithEmailAndPassword } from 'firebase/auth';
+import Style from '../components/Style.js';
 
 export default function Login({ fail }) {
   const [email, setEmail] = React.useState('');
@@ -23,7 +24,7 @@ export default function Login({ fail }) {
         value={password}
         onChangeText={(newText) => setPassword(newText)}
       />
-      <Pressable style={styles.button} onPress={function () {
+      <Pressable style={Style.button} onPress={function () {
         async function login() {
           try {
             const userCredential = await signInWithEmailAndPassword(auth, email, password);
@@ -33,7 +34,7 @@ export default function Login({ fail }) {
         login();
         fail(false);
       }}>
-        <Text style={styles.buttonText}>Log In</Text>
+        <Text style={Style.buttonText}>Log In</Text>
       </Pressable>
     </View>
   );
@@ -53,16 +54,5 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     borderRadius: 5,
-  },
-  button: {
-    alignSelf:'center',
-    backgroundColor: 'dodgerblue',
-    padding: 10,
-    alignItems: 'center',
-    borderRadius: 5,
-    width: '50%',
-  },
-  buttonText: {
-    color: 'white',
   },
 });

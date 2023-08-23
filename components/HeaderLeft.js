@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Pressable } from 'react-native'; 
 import { useNavigation } from '@react-navigation/native';
 import { Ionicons } from '@expo/vector-icons'; 
+import Color from '../components/Color';
 
 const HeaderLeft = ({ title }) => {
   const navigation = useNavigation();
@@ -10,7 +11,7 @@ const HeaderLeft = ({ title }) => {
     navigation.setOptions({
       headerTitle: title,
       headerStyle: {
-        backgroundColor: 'deepskyblue',
+        backgroundColor: Color.Header,
       },
       headerTitleStyle: {
         color: 'white',

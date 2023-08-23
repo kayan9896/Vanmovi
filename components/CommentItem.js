@@ -9,7 +9,7 @@ export default function CommentItem({ comment, user }) {
     const [showuri,setShowuri]=useState(null)
     useEffect(() => {
         async function getemailandpic() {
-            const dt = await get('uid-email',user);
+            const dt = await get('-email',user);
             const dt2=await get('users',user)
             if(dt){
                 setEmail(dt.email)

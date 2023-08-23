@@ -2,6 +2,8 @@ import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 import { auth } from '../firebase/setup.js';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import Color from '../components/Color';
+import Style from '../components/Style.js';
 
 export default function Signup({ fail }) {
   const [email, setEmail] = React.useState('');
@@ -49,7 +51,7 @@ export default function Signup({ fail }) {
         onChangeText={(newText) => setConfirmPassword(newText)}
       />
       <Pressable
-        style={styles.button}
+        style={Style.button}
         onPress={function () {
           if (password !== confirmPassword) {
             alert('Passwords do not match');
@@ -71,7 +73,7 @@ export default function Signup({ fail }) {
           }
         }}
       >
-        <Text style={styles.buttonText}>Sign Up</Text>
+        <Text style={Style.buttonText}>Sign Up</Text>
       </Pressable>
     </View>
   );
@@ -91,16 +93,5 @@ const styles = StyleSheet.create({
     padding: 10,
     marginBottom: 20,
     borderRadius: 5,
-  },
-  button: {
-    alignSelf: 'center',
-    backgroundColor: 'dodgerblue',
-    padding: 10,
-    alignItems: 'center',
-    borderRadius: 5,
-    width: '50%',
-  },
-  buttonText: {
-    color: 'white',
   },
 });
