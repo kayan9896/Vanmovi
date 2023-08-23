@@ -1,6 +1,7 @@
 export default Color = {
     Header: 'deepskyblue',
-    TabNavigator: 'turquoise',
+    TabNavigator: 'deepskyblue',
+    Button: 'deepskyblue',
     gradientStart: 'lightyellow',
     gradientEnd: 'lightyellow',
     gradientFinal: 'aquamarine',

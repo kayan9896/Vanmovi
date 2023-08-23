@@ -2,6 +2,7 @@ import { View, Text, Pressable, TextInput, StyleSheet } from 'react-native';
 import React from 'react';
 import { auth } from '../firebase/setup.js';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import Color from '../components/Color';
 
 export default function Signup({ fail }) {
   const [email, setEmail] = React.useState('');
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   },
   button: {
     alignSelf: 'center',
-    backgroundColor: 'dodgerblue',
+    backgroundColor: Color.Button,
     padding: 10,
     alignItems: 'center',
     borderRadius: 5,

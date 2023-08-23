@@ -294,7 +294,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'lightyellow',
   },
   button: {
-    backgroundColor: 'dodgerblue',
+    backgroundColor: Color.Button,
     paddingVertical: 15,
     paddingHorizontal: 20,
     alignItems: 'center',

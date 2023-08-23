@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, StyleSheet, Button } from 'react-native';
+import { Text, FlatList, StyleSheet, Button, Pressable } from 'react-native';
 import Item from '../components/Item';
 import HeaderRight from '../components/HeaderRight';
 import * as Notifications from "expo-notifications";
 import { auth } from '../firebase/setup'; 
 import { add, remove, get, set } from '../firebase/util';
 import Color from '../components/Color';
+import Style from '../components/Style';
 import { LinearGradient } from 'expo-linear-gradient';
+
 
 
 export default function Home({ navigation }) {
@@ -127,7 +129,11 @@ export default function Home({ navigation }) {
       style={styles.container}>
       <HeaderRight title="VanMovie" navigation={navigation} />
       <Text style={styles.title}>What's new!</Text>
-      <Button title="NTFY: Movie Recommend" onPress={handleTestNotification} />
+      {/* <Button title="NTFY: Movie Recommendation" onPress={handleTestNotification} /> */}
+      <Pressable style={Style.button} onPress={handleTestNotification}>
+        <Text style={Style.buttonText}>NTFY: Movie Recommendation</Text>
+      </Pressable>
+
       <FlatList 
         data={data} 
         renderItem={(i) => <Item info={i.item} toggleLike={toggleLike} />} 
@@ -150,4 +156,5 @@ const styles = StyleSheet.create({
     textAlign: 'center', 
     color: '#333',
   },
+  button: Style.Button,  
 });

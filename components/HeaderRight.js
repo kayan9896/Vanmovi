@@ -1,13 +1,14 @@
 import React, { useEffect } from 'react';
 import { Pressable, StyleSheet, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons'; 
+import Color from '../components/Color';
 
 const HeaderRight = ({ title, navigation, style }) => {
   useEffect(() => {
     navigation.setOptions({
       headerTitle: title,
       headerStyle: {
-        backgroundColor: 'deepskyblue',
+        backgroundColor: Color.Header,
       },
       headerTitleStyle: {
         color: 'white',
