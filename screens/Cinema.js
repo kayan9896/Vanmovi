@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, FlatList, StyleSheet, Image, ActivityIndicator } from 'react-native';
 import HeaderRight from '../components/HeaderRight';
 import MapView, { Marker } from 'react-native-maps';

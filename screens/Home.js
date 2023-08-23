@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Text, FlatList, StyleSheet, Button, Pressable } from 'react-native';
+import { Text, FlatList, StyleSheet, Pressable } from 'react-native';
 import Item from '../components/Item';
 import HeaderRight from '../components/HeaderRight';
 import * as Notifications from "expo-notifications";

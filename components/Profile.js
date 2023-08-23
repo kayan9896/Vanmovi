@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Image, Pressable, Alert, FlatList } from 'react-native';
-import { Ionicons, Entypo } from '@expo/vector-icons';
+import { View, Text, StyleSheet, Pressable } from 'react-native';
+import { Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
 import { onAuthStateChanged, signOut } from 'firebase/auth';

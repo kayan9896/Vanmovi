@@ -1,6 +1,6 @@
 import { View, Text, TextInput, Pressable } from 'react-native';
 import React from 'react';
-import { add, remove,set } from '../firebase/util.js';
+import { add, set } from '../firebase/util.js';
 import { auth } from '../firebase/setup.js';
 
 export default function Input({ mvname, loggedIn, changepop }) {

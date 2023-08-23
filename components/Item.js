@@ -4,8 +4,6 @@ import { useNavigation } from '@react-navigation/native';
 import calendar from '../images/calendar.png';
 import genre from '../images/genre.png';  
 import time from '../images/time.png'; 
-import { AntDesign } from '@expo/vector-icons';
-import { auth } from '../firebase/setup';
 
 export default function Item({ info }) {
   const navigation = useNavigation();
