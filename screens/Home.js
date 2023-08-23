@@ -10,50 +10,11 @@ import Style from '../components/Style';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
-
 export default function Home({ navigation }) {
   const [data, setData] = useState([]);
   const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1';
   const genresMap = new Map();
   const [likedMovies, setLikedMovies] = useState(new Set());
-
-  const toggleLike = async (movieID, movieName) => {
-    const moviePath = `movies/${auth.currentUser.uid}/${movieID}`;
-    if (likedMovies.has(movieID)) {
-      console.log('Movie is liked. Attempting to remove...');
-
-      setLikedMovies(prev => {
-        prev.delete(movieID);
-        return new Set([...prev]);
-      });
-      await remove(moviePath);
-      console.log('Movie removed successfully');
-
-    } else {
-      console.log('Movie is not liked. Attempting to add...');
-      setLikedMovies(prev => new Set([...prev, movieID]));
-      await add(moviePath, { movieID: movieID, name: movieName });
-      console.log('Movie added successfully');
-    }
-  };
-
-  useEffect(() => {
-    if (auth.currentUser) {
-      const checkLikedMovies = async () => {
-        const liked = new Set();
-        const userMoviesData = await get("movies", auth.currentUser.uid);
-        if (userMoviesData) {
-          for (let movie in userMoviesData) {
-            if (userMoviesData.hasOwnProperty(movie)) {
-              liked.add(userMoviesData[movie].movieID);
-            }
-          }
-          setLikedMovies(liked);
-        }
-      };
-      checkLikedMovies();
-    }
-  }, [auth.currentUser]);
 
   useEffect(() => {
     async function fetchGenres() {
@@ -136,7 +97,7 @@ export default function Home({ navigation }) {
 
       <FlatList 
         data={data} 
-        renderItem={(i) => <Item info={i.item} toggleLike={toggleLike} />} 
+        renderItem={(i) => <Item info={i.item} />} 
         keyExtractor={(item) => item.id.toString()}
       />
     </LinearGradient>
@@ -147,7 +108,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: 'lightyellow',
   },
   title: {
     fontSize: 24,

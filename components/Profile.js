@@ -14,36 +14,12 @@ import { ref, uploadBytesResumable,getDownloadURL,deleteObject} from 'firebase/s
 import {add,update,remove,get,set} from '../firebase/util.js'
 import { storage } from "../firebase/setup.js";
 import Camera from './Camera';
-import Item from '../components/Item';
-import MovieinPro from '../components/MovieinPro.js';
 import Color from '../components/Color.js';
 import Style from '../components/Style.js';
 import { LinearGradient } from 'expo-linear-gradient';
 
 
 export default function Profile({ navigation }) {
-  const [likedMovies, setLikedMovies] = useState([]);
-
-  useEffect(() => {
-    if (auth.currentUser) {
-      // Fetch liked movies from Firebase using `auth.currentUser.uid` and populate likedMovies.
-    }
-  }, []);
-
-  const isMovieLiked = (movieId) => {
-    return likedMovies.includes(movieId);
-  };
-
-  const toggleLike = (movieId) => {
-    if (likedMovies.includes(movieId)) {
-      setLikedMovies((prev) => prev.filter(id => id !== movieId));
-      // Remove movieId from Firebase 'likedMovies' collection for this user.
-    } else {
-      setLikedMovies((prev) => [...prev, movieId]);
-      // Add movieId to Firebase 'likedMovies' collection for this user.
-    }
-  };
-
   const [loggedIn, setLoggedIn] = useState(auth.currentUser);
   const [imageUri, setImageUri] = useState(null);
   const [showuri,setShowuri]=useState(null)
@@ -63,18 +39,9 @@ export default function Profile({ navigation }) {
 
   const renderUserComments = () => {
     return (
-      <View style={{ height: '25%' }}>
+      <View style={{ height: '50%' }}>
         <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Comments</Text>
         <CommentinPro />
-      </View>
-    );
-  };
-
-  const renderUserMovies = () => {
-    return (
-      <View style={{ height: '25%' }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Liked Movies</Text>
-        <MovieinPro />
       </View>
     );
   };
@@ -276,7 +243,6 @@ export default function Profile({ navigation }) {
       />
 
       {loggedIn && renderUserComments()}
-      {loggedIn && renderUserMovies()}
       <Notification />
     </LinearGradient>
   );

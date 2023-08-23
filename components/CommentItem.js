@@ -4,12 +4,13 @@ import {get,} from '../firebase/util.js'
 import { ref, getDownloadURL} from 'firebase/storage';
 import { storage } from "../firebase/setup.js";
 
+
 export default function CommentItem({ comment, user }) {
     const [email,setEmail]=useState(null)
     const [showuri,setShowuri]=useState(null)
     useEffect(() => {
         async function getemailandpic() {
-            const dt = await get('-email',user);
+            const dt = await get('uid-email',user);
             const dt2=await get('users',user)
             if(dt){
                 setEmail(dt.email)
