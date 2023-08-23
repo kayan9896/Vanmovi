@@ -15,7 +15,7 @@ import {add,update,remove,get,set} from '../firebase/util.js'
 import { storage } from "../firebase/setup.js";
 import Camera from './Camera';
 import Item from '../components/Item';
-import { ScrollView } from 'react-native';
+import MovieinPro from '../components/MovieinPro.js';
 
 
 export default function Profile({ navigation }) {
@@ -67,23 +67,11 @@ export default function Profile({ navigation }) {
     );
   };
 
-  const renderLikedMovies = () => {
+  const renderUserMovies = () => {
     return (
-      <View style={{ height: '30%' }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20, marginBottom: 10 }}>My Liked Movies</Text>
-        <FlatList 
-          data={likedMovies} 
-          renderItem={(i) => { 
-            return (
-              <Item 
-                info={i.item} 
-                navigation={navigation} 
-                isLiked={isMovieLiked(i.item.id)} 
-                toggleLike={toggleLike} 
-              />
-            );
-          }} 
-        />
+      <View style={{ height: '25%' }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Liked Movies</Text>
+        <MovieinPro />
       </View>
     );
   };
@@ -287,7 +275,7 @@ export default function Profile({ navigation }) {
       />
 
       {loggedIn && renderUserComments()}
-      {loggedIn && renderLikedMovies()}
+      {loggedIn && renderUserMovies()}
       <Notification />
     </View>
   );
