@@ -171,11 +171,8 @@ export default function Profile({ navigation }) {
 
 
   const pickFromGallery = async (callback) => {
-    console.log("pickFromGallery: Started");  // 1
     try {
-      console.log("pickFromGallery: Requesting Media Library Permissions");  // 2
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      console.log("pickFromGallery: Permissions Status:", status);   // After async call
       
       if (status !== 'granted') {
         alert('Sorry, we need gallery permissions to make this work!');
@@ -183,36 +180,37 @@ export default function Profile({ navigation }) {
         return;
       }
 
-      console.log("pickFromGallery: Launching Image Library");  // 2
-      const result = await ImagePicker.launchImageLibraryAsync({
+      let result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
-        aspect: [4, 3],
         quality: 1,
       });
-      console.log("pickFromGallery: Image Picker Result:", result);  // After async call    
 
-      if (result.canceled) {
-        console.log("pickFromGallery: Operation was canceled");  // 3
-        setLoading(!loadchange);
-        return false;
-      }      
-      if (!result.canceled && result.assets && result.assets.length) {
-        console.log("pickFromGallery: Image picked and setting URI");  // 3
+      if (!result.canceled) {
+        let filename = result?.assets[0].uri.substring(
+          result?.assets[0].uri.lastIndexOf("/") + 1,
+          result?.assets[0].uri.length
+        );
+
+        delete result.cancelled;
+        result = {
+          ...result,
+          name: filename,
+        };
+
         setImageUri(result.assets[0].uri);
         saveImageUri(result.assets[0].uri);
         setShowuri(result.assets[0].uri);
-      }      
+      } 
+
     } catch (error) {
       console.error("An error occurred:", error);
       setLoading(false);
     }
+
     if(callback){
-      console.log("pickFromGallery: Invoking callback after delay");  // Before invoking callback
       setTimeout(() => {
         callback();
       }, 4000);}
-    console.log("pickFromGallery: Completed");  // 1    
-    return true;
   };
   
 
