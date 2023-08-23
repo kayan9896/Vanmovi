@@ -30,19 +30,7 @@ export default function Profile({ navigation }) {
     }
   }, []);
 
-  const isMovieLiked = (movieId) => {
-    return likedMovies.includes(movieId);
-  };
 
-  const toggleLike = (movieId) => {
-    if (likedMovies.includes(movieId)) {
-      setLikedMovies((prev) => prev.filter(id => id !== movieId));
-      // Remove movieId from Firebase 'likedMovies' collection for this user.
-    } else {
-      setLikedMovies((prev) => [...prev, movieId]);
-      // Add movieId to Firebase 'likedMovies' collection for this user.
-    }
-  };
 
   const [loggedIn, setLoggedIn] = useState(auth.currentUser);
   const [imageUri, setImageUri] = useState(null);
@@ -66,15 +54,6 @@ export default function Profile({ navigation }) {
       <View style={{ height: '25%' }}>
         <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Comments</Text>
         <CommentinPro />
-      </View>
-    );
-  };
-
-  const renderUserMovies = () => {
-    return (
-      <View style={{ height: '25%' }}>
-        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Liked Movies</Text>
-        <MovieinPro />
       </View>
     );
   };
@@ -276,7 +255,6 @@ export default function Profile({ navigation }) {
       />
 
       {loggedIn && renderUserComments()}
-      {loggedIn && renderUserMovies()}
       <Notification />
     </LinearGradient>
   );

@@ -7,16 +7,8 @@ import time from '../images/time.png';
 import { AntDesign } from '@expo/vector-icons';
 import { auth } from '../firebase/setup';
 
-export default function Item({ info, toggleLike }) {
+export default function Item({ info }) {
   const navigation = useNavigation();
-  const handleIconPress = () => {
-    if (auth.currentUser) {
-      console.log(`Toggling like for movie with ID: ${info.id} and name: ${info.name}`);
-      toggleLike(info.id, info.name);
-    } else {
-      navigation.navigate('Profile');
-    }
-  };
 
   return (
     <Pressable style={styles.container} onPress={() => { navigation.navigate('Detail', { info: info }) }}>
@@ -25,15 +17,6 @@ export default function Item({ info, toggleLike }) {
         source={{ uri: `https://image.tmdb.org/t/p/w500/${info.poster_path}` }}
       />
       <View style={styles.details}>
-        <AntDesign 
-          name={info.isLiked ? "star" : "staro"} 
-          size={23} 
-          color={"deepskyblue"} 
-          onPress={handleIconPress} 
-          marginTop={2}
-          marginBottom={2}
-        />
-
         <Text style={styles.name} numberOfLines={1} ellipsizeMode="tail">{info.name}</Text>
 
         <View style={styles.row}>
