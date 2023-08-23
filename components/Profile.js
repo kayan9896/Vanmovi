@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Image, Pressable, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, Pressable, Alert, FlatList } from 'react-native';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -14,9 +14,33 @@ import { ref, uploadBytesResumable,getDownloadURL,deleteObject} from 'firebase/s
 import {add,update,remove,get,set} from '../firebase/util.js'
 import { storage } from "../firebase/setup.js";
 import Camera from './Camera';
+import Item from '../components/Item';
+import { ScrollView } from 'react-native';
 
 
-export default function Profile() {
+export default function Profile({ navigation }) {
+  const [likedMovies, setLikedMovies] = useState([]);
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      // Fetch liked movies from Firebase using `auth.currentUser.uid` and populate likedMovies.
+    }
+  }, []);
+
+  const isMovieLiked = (movieId) => {
+    return likedMovies.includes(movieId);
+  };
+
+  const toggleLike = (movieId) => {
+    if (likedMovies.includes(movieId)) {
+      setLikedMovies((prev) => prev.filter(id => id !== movieId));
+      // Remove movieId from Firebase 'likedMovies' collection for this user.
+    } else {
+      setLikedMovies((prev) => [...prev, movieId]);
+      // Add movieId to Firebase 'likedMovies' collection for this user.
+    }
+  };
+
   const [loggedIn, setLoggedIn] = useState(auth.currentUser);
   const [imageUri, setImageUri] = useState(null);
   const [showuri,setShowuri]=useState(null)
@@ -36,9 +60,30 @@ export default function Profile() {
 
   const renderUserComments = () => {
     return (
-      <View style={{ flex: 0.45 }}>
+      <View style={{ height: '25%' }}>
         <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Comments</Text>
         <CommentinPro />
+      </View>
+    );
+  };
+
+  const renderLikedMovies = () => {
+    return (
+      <View style={{ height: '30%' }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20, marginBottom: 10 }}>My Liked Movies</Text>
+        <FlatList 
+          data={likedMovies} 
+          renderItem={(i) => { 
+            return (
+              <Item 
+                info={i.item} 
+                navigation={navigation} 
+                isLiked={isMovieLiked(i.item.id)} 
+                toggleLike={toggleLike} 
+              />
+            );
+          }} 
+        />
       </View>
     );
   };
@@ -126,11 +171,8 @@ export default function Profile() {
 
 
   const pickFromGallery = async (callback) => {
-    console.log("pickFromGallery: Started");  // 1
     try {
-      console.log("pickFromGallery: Requesting Media Library Permissions");  // 2
       const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-      console.log("pickFromGallery: Permissions Status:", status);   // After async call
       
       if (status !== 'granted') {
         alert('Sorry, we need gallery permissions to make this work!');
@@ -138,36 +180,37 @@ export default function Profile() {
         return;
       }
 
-      console.log("pickFromGallery: Launching Image Library");  // 2
-      const result = await ImagePicker.launchImageLibraryAsync({
+      let result = await ImagePicker.launchImageLibraryAsync({
         allowsEditing: true,
-        aspect: [4, 3],
         quality: 1,
       });
-      console.log("pickFromGallery: Image Picker Result:", result);  // After async call    
 
-      if (result.canceled) {
-        console.log("pickFromGallery: Operation was canceled");  // 3
-        setLoading(!loadchange);
-        return false;
-      }      
-      if (!result.canceled && result.assets && result.assets.length) {
-        console.log("pickFromGallery: Image picked and setting URI");  // 3
+      if (!result.canceled) {
+        let filename = result?.assets[0].uri.substring(
+          result?.assets[0].uri.lastIndexOf("/") + 1,
+          result?.assets[0].uri.length
+        );
+
+        delete result.cancelled;
+        result = {
+          ...result,
+          name: filename,
+        };
+
         setImageUri(result.assets[0].uri);
         saveImageUri(result.assets[0].uri);
         setShowuri(result.assets[0].uri);
-      }      
+      } 
+
     } catch (error) {
       console.error("An error occurred:", error);
       setLoading(false);
     }
+
     if(callback){
-      console.log("pickFromGallery: Invoking callback after delay");  // Before invoking callback
       setTimeout(() => {
         callback();
       }, 4000);}
-    console.log("pickFromGallery: Completed");  // 1    
-    return true;
   };
   
 
@@ -230,7 +273,6 @@ export default function Profile() {
       <HeaderLeft title="Profile" />
       <Pressable style={styles.signOutContainer} onPress={() => signOut(auth)}>
         <Entypo name="log-out" size={24} color="dodgerblue" />
-
       </Pressable>
       <Text style={styles.emailText}>{auth.currentUser.email}</Text>
       <Camera 
@@ -245,6 +287,7 @@ export default function Profile() {
       />
 
       {loggedIn && renderUserComments()}
+      {loggedIn && renderLikedMovies()}
       <Notification />
     </View>
   );
