@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Image, Pressable, Alert } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, Pressable, Alert, FlatList } from 'react-native';
 import { Ionicons, Entypo } from '@expo/vector-icons';
 import * as ImagePicker from 'expo-image-picker';
 
@@ -14,9 +14,33 @@ import { ref, uploadBytesResumable,getDownloadURL,deleteObject} from 'firebase/s
 import {add,update,remove,get,set} from '../firebase/util.js'
 import { storage } from "../firebase/setup.js";
 import Camera from './Camera';
+import Item from '../components/Item';
+import { ScrollView } from 'react-native';
 
 
-export default function Profile() {
+export default function Profile({ navigation }) {
+  const [likedMovies, setLikedMovies] = useState([]);
+
+  useEffect(() => {
+    if (auth.currentUser) {
+      // Fetch liked movies from Firebase using `auth.currentUser.uid` and populate likedMovies.
+    }
+  }, []);
+
+  const isMovieLiked = (movieId) => {
+    return likedMovies.includes(movieId);
+  };
+
+  const toggleLike = (movieId) => {
+    if (likedMovies.includes(movieId)) {
+      setLikedMovies((prev) => prev.filter(id => id !== movieId));
+      // Remove movieId from Firebase 'likedMovies' collection for this user.
+    } else {
+      setLikedMovies((prev) => [...prev, movieId]);
+      // Add movieId to Firebase 'likedMovies' collection for this user.
+    }
+  };
+
   const [loggedIn, setLoggedIn] = useState(auth.currentUser);
   const [imageUri, setImageUri] = useState(null);
   const [showuri,setShowuri]=useState(null)
@@ -36,9 +60,30 @@ export default function Profile() {
 
   const renderUserComments = () => {
     return (
-      <View style={{ flex: 0.45 }}>
+      <View style={{ height: '25%' }}>
         <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 25, marginBottom: 10 }}>My Comments</Text>
         <CommentinPro />
+      </View>
+    );
+  };
+
+  const renderLikedMovies = () => {
+    return (
+      <View style={{ height: '30%' }}>
+        <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: 20, marginBottom: 10 }}>My Liked Movies</Text>
+        <FlatList 
+          data={likedMovies} 
+          renderItem={(i) => { 
+            return (
+              <Item 
+                info={i.item} 
+                navigation={navigation} 
+                isLiked={isMovieLiked(i.item.id)} 
+                toggleLike={toggleLike} 
+              />
+            );
+          }} 
+        />
       </View>
     );
   };
@@ -90,26 +135,27 @@ export default function Profile() {
   const pickImage = async (callback) => {
     try {
       const { status } = await ImagePicker.requestCameraPermissionsAsync();
-
       if (status !== 'granted') {
         alert('Sorry, we need camera permissions to make this work!');
+        setLoading(false);
         return;
       }
-
       const result = await ImagePicker.launchCameraAsync({
         allowsEditing: true,
         aspect: [4, 3],
         quality: 1,
-      });
-      if(result.canceled){
-        setLoading(!loadchange)
-        return false}
+      });      
+      if (result.canceled) {
+        setLoading(!loadchange);
+        return false;
+      }      
       if (!result.canceled && result.assets && result.assets.length) {
         setImageUri(result.assets[0].uri);
         saveImageUri(result.assets[0].uri);
-      }
+      }      
     } catch (error) {
       console.error("An error occurred:", error);
+      setLoading(false);
     }
     if(callback){
     setTimeout(() => {
@@ -117,6 +163,50 @@ export default function Profile() {
     }, 4000);}
     return true;
   };
+
+
+  const pickFromGallery = async (callback) => {
+    try {
+      const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
+      
+      if (status !== 'granted') {
+        alert('Sorry, we need gallery permissions to make this work!');
+        setLoading(false);
+        return;
+      }
+
+      let result = await ImagePicker.launchImageLibraryAsync({
+        allowsEditing: true,
+        quality: 1,
+      });
+
+      if (!result.canceled) {
+        let filename = result?.assets[0].uri.substring(
+          result?.assets[0].uri.lastIndexOf("/") + 1,
+          result?.assets[0].uri.length
+        );
+
+        delete result.cancelled;
+        result = {
+          ...result,
+          name: filename,
+        };
+
+        setImageUri(result.assets[0].uri);
+        saveImageUri(result.assets[0].uri);
+      } 
+
+    } catch (error) {
+      console.error("An error occurred:", error);
+      setLoading(false);
+    }
+
+    if(callback){
+      setTimeout(() => {
+        callback();
+      }, 4000);}
+  };
+  
 
   const editImage = async () => {
     try {
@@ -141,7 +231,7 @@ export default function Profile() {
       remove('users',auth.currentUser.uid)
       const t=ref(storage, showuri)
       //console.log(t._location.path_)
-      deleteObject(ref(storage, t._location.path_));
+      await deleteObject(ref(storage, t._location.path_));
       setShowuri(null);
     } catch (e) {
       console.error("Failed to delete image URI:", e);
@@ -177,7 +267,6 @@ export default function Profile() {
       <HeaderLeft title="Profile" />
       <Pressable style={styles.signOutContainer} onPress={() => signOut(auth)}>
         <Entypo name="log-out" size={24} color="dodgerblue" />
-
       </Pressable>
       <Text style={styles.emailText}>{auth.currentUser.email}</Text>
       <Camera 
@@ -188,9 +277,11 @@ export default function Profile() {
         editImage={editImage}
         flag={loadchange}
         styles={styles} 
+        pickFromGallery={pickFromGallery}
       />
 
       {loggedIn && renderUserComments()}
+      {loggedIn && renderLikedMovies()}
       <Notification />
     </View>
   );
@@ -212,7 +303,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     borderRadius: 25,
     marginTop: 10,
-    width: '25%',
+    width: '50%',
     alignSelf: 'center',
     shadowColor: "#000",
     shadowOffset: {
@@ -252,7 +343,7 @@ const styles = StyleSheet.create({
   },
   signOutText: {
     color: 'dodgerblue',
-    marginLeft: 5,  // Space between the icon and text
+    marginLeft: 5,
     fontSize: 16,
     fontWeight: 'bold',
   },

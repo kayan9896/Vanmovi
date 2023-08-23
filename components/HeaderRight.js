@@ -15,7 +15,7 @@ const HeaderRight = ({ title, navigation, style }) => {
       headerTitleAlign: 'center',
       headerRight: () => (
         <Pressable onPress={() => navigation.navigate('Profile')}>
-          <Ionicons name="person-circle-outline" size={29} color="yellow" style={styles.iconStyle} /> 
+          <Ionicons name="person-circle-outline" size={30} color="yellow" style={styles.iconStyle} /> 
         </Pressable>
       ),
     });

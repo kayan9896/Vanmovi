@@ -77,9 +77,9 @@ export default function Home({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <HeaderRight title="Movies" navigation={navigation} />
+      <HeaderRight title="VanMovie" navigation={navigation} />
       <Text style={styles.title}>What's new!</Text>
-      <Button title="Movie Recommend" onPress={handleTestNotification} />
+      <Button title="NTFY: Movie Recommend" onPress={handleTestNotification} />
       <FlatList data={data} renderItem={(i) => { return <Item info={i.item} /> }} />
     </View>
   );
