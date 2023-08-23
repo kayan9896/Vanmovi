@@ -27,8 +27,8 @@ export default function Item({ info, toggleLike }) {
       <View style={styles.details}>
         <AntDesign 
           name={info.isLiked ? "star" : "staro"} 
-          size={24} 
-          color={"dodgerblue"} 
+          size={23} 
+          color={"deepskyblue"} 
           onPress={handleIconPress} 
           marginTop={2}
           marginBottom={2}

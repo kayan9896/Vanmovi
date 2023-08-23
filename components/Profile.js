@@ -16,6 +16,8 @@ import { storage } from "../firebase/setup.js";
 import Camera from './Camera';
 import Item from '../components/Item';
 import MovieinPro from '../components/MovieinPro.js';
+import Color from '../components/Color';
+import { LinearGradient } from 'expo-linear-gradient';
 
 
 export default function Profile({ navigation }) {
@@ -257,7 +259,9 @@ export default function Profile({ navigation }) {
   }
 
   return (
-    <View style={styles.container}>
+    <LinearGradient 
+      colors={[Color.gradientStart, Color.gradientEnd, Color.gradientFinal]}
+      style={styles.container}>
       <HeaderLeft title="Profile" />
       <Pressable style={styles.signOutContainer} onPress={() => signOut(auth)}>
         <Entypo name="log-out" size={24} color="dodgerblue" />
@@ -277,7 +281,7 @@ export default function Profile({ navigation }) {
       {loggedIn && renderUserComments()}
       {loggedIn && renderUserMovies()}
       <Notification />
-    </View>
+    </LinearGradient>
   );
 }
 

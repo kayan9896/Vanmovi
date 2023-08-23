@@ -5,6 +5,9 @@ import HeaderRight from '../components/HeaderRight';
 import * as Notifications from "expo-notifications";
 import { auth } from '../firebase/setup'; 
 import { add, remove, get, set } from '../firebase/util';
+import Color from '../components/Color';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 export default function Home({ navigation }) {
   const [data, setData] = useState([]);
@@ -119,7 +122,9 @@ export default function Home({ navigation }) {
   };
 
   return (
-    <View style={styles.container}>
+    <LinearGradient 
+      colors={[Color.gradientStart, Color.gradientEnd, Color.gradientFinal]}
+      style={styles.container}>
       <HeaderRight title="VanMovie" navigation={navigation} />
       <Text style={styles.title}>What's new!</Text>
       <Button title="NTFY: Movie Recommend" onPress={handleTestNotification} />
@@ -128,7 +133,7 @@ export default function Home({ navigation }) {
         renderItem={(i) => <Item info={i.item} toggleLike={toggleLike} />} 
         keyExtractor={(item) => item.id.toString()}
       />
-    </View>
+    </LinearGradient>
   );
 }
 

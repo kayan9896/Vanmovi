@@ -1,8 +1,7 @@
-export default Colors = {
+export default Color = {
     Header: 'deepskyblue',
-    TabNavigator.js: 'turquoise'
-    Background: 'lightyellow',
+    TabNavigator: 'turquoise',
     gradientStart: 'lightyellow',
-    gradientEnd: 'palegreen',
-    gradientFinal: 'turquoise',
+    gradientEnd: 'lightyellow',
+    gradientFinal: 'aquamarine',
 };

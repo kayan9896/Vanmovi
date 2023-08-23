@@ -3,6 +3,9 @@ import { View, Text, FlatList, StyleSheet, Image, ActivityIndicator } from 'reac
 import HeaderRight from '../components/HeaderRight';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
+import Color from '../components/Color';
+import { LinearGradient } from 'expo-linear-gradient';
+
 
 export default function Cinema({ navigation }) {
     const [cinemas, setCinemas] = React.useState([]);
@@ -43,7 +46,9 @@ export default function Cinema({ navigation }) {
     }, [Location]);
 
     return (
-        <View style={styles.container}>
+        <LinearGradient 
+            colors={[Color.gradientStart, Color.gradientEnd, Color.gradientFinal]}
+            style={styles.container}>
             <HeaderRight title="Cinemas" navigation={navigation} />
 
             {loading ? (
@@ -78,7 +83,7 @@ export default function Cinema({ navigation }) {
                     <FlatList data={cinemas} renderItem={({ item }) => <CinemaItem i={item} />} />
                 </>
             )}
-        </View>
+        </LinearGradient>
     );
 }
 
@@ -92,7 +97,6 @@ const CinemaItem = ({ i }) => (
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: 'lightyellow',
         paddingHorizontal: 10,
     },
     map: {
