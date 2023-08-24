@@ -24,7 +24,7 @@ VanMovie App is a user-friendly platform designed for movie enthusiasts offering
 
 **Ziqi Fo**:
 
-- 📝 Made the presentation slides and project demo.
+- 📝 Created the presentation slides and project demo.
 - 📡 Led the data-fetching process from various APIs.
 - 🔔 Incorporated a real-time notification functionality.
 - 🔎 Actively involved in bug detection and resolution.
@@ -65,7 +65,7 @@ Compilation of profile pictures set by the users
 - `id`: Unique identifier of the user.
 - `image`: Identifier of the picture set by the user.
 
-#### **Interaction between collections**
+#### **4. Interaction between collections**
 
 - All the three collections are linked via the id of user.
 - On the Sign-Up step, a unique id of user is assigned to the email of user.
