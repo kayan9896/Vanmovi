@@ -59,7 +59,7 @@ Compilation of reviews and feedback by the app's users.
 
 
 
-## About Iteration2, what do we have so far:  
+## About Iteration3, what do we have so far:  
 ### API Integrations
 - 🎬 **TMDB API**: This API provides our app with current and popular movies, enriching the movie database.
 - 🌏 **Google Map API**: Integrated to display nearby cinemas to users in real-time.
@@ -72,19 +72,21 @@ Compilation of reviews and feedback by the app's users.
   - Detailed view: Users can click on any movie to dive deeper into its synopsis, runtime, and more.
   - Reviews: After viewing the movie details, users can drop their opinions and ratings.
   - 🎲 **Random Movie Recommendation**: A unique button on the homepage surprises users by suggesting a random movie genre.
-![WechatIMG277](https://github.com/kayan9896/Vanmovi/assets/122495175/18fcbf71-33a0-4cd5-afb9-84b79e9ea7f0)
+![Vanmovi1](https://github.com/kayan9896/Vanmovi/assets/122495175/a8235203-b17f-4cd6-89f6-d035ecb2351c)
 
 - **Cinemas Page**:
   - 📍 **Cinema Locator**: Utilizing the Google Map API, users can visually locate nearby cinemas.
   - 📜 A neat list of nearby cinemas is also provided for users who prefer a textual view.
-![WechatIMG278](https://github.com/kayan9896/Vanmovi/assets/122495175/9de9828a-5e8f-42ba-953e-9f39644965a4)
+![Vanmovi2](https://github.com/kayan9896/Vanmovi/assets/122495175/7dcfce75-e0ad-42a8-ae09-159550832fd1)
 
 - **Profile Section (Top Right Corner)**:
   - 🖼️ **User Avatar**: Displayed prominently, users can easily change or update their profile picture.
+    - 📷 Camera Integration: Users have the option to take a new photo using the device's camera.
+    - 📂 Local Photo Upload: Alternatively, users can choose a photo from their device's local storage for the avatar.
   - 📧 User's registered email is shown for easy reference.
   - 💬 **User Comments**: All the reviews and comments made by the user are neatly organized here.
     - 🔧 Edit & Delete: Users have the flexibility to edit their avatars or even delete specific comments they've made in the past.
-![WechatIMG279](https://github.com/kayan9896/Vanmovi/assets/122495175/df50c3c8-a98e-42fd-be13-f928abec617d)
+![Vanmovi3](https://github.com/kayan9896/Vanmovi/assets/122495175/bcf43593-e0b0-4ac3-9761-4ce5fd696dc2)
 
 ---
 This README reflects the current status of the VanMovie app, highlighting the features and integrations that make our platform unique and user-centric.
