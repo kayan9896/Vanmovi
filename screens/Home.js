@@ -6,11 +6,11 @@ import * as Notifications from "expo-notifications";
 import Color from '../components/Color';
 import Style from '../components/Style';
 import { LinearGradient } from 'expo-linear-gradient';
+import { API_KEY } from "@env";
 
 
 export default function Home({ navigation }) {
   const [data, setData] = useState([]);
-  const API_KEY = '7216108a2b7fcfbae0574a6c892ba9e1';
   const genresMap = new Map();
   const [likedMovies, setLikedMovies] = useState(new Set());
 
@@ -88,7 +88,6 @@ export default function Home({ navigation }) {
       style={styles.container}>
       <HeaderRight title="VanMovie" navigation={navigation} />
       <Text style={styles.title}>What's new!</Text>
-      {/* <Button title="NTFY: Movie Recommendation" onPress={handleTestNotification} /> */}
       <Pressable style={[Style.button, Style.buttonDefaultWidth, styles.buttonMargin]} onPress={handleTestNotification}>
         <Text style={Style.buttonText}>NTFY: Movie Recommendation</Text>
       </Pressable>
