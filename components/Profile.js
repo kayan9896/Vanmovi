@@ -72,7 +72,6 @@ export default function Profile({ navigation }) {
     
     if(loggedIn){
       fetchImageUri();
-      console.log('login',showuri)
     } 
   })
 
@@ -137,7 +136,10 @@ export default function Profile({ navigation }) {
         allowsEditing: true,
         quality: 1,
       });
-
+      if (result.canceled) {
+        setLoading(!loadchange);
+        return false;
+      }   
       if (!result.canceled) {
         let filename = result?.assets[0].uri.substring(
           result?.assets[0].uri.lastIndexOf("/") + 1,

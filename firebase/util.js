@@ -16,7 +16,6 @@ async function get(colname, id) {
         if (docRef.exists()) {
             return docRef.data();
         } else {
-            console.log("No document found with given ID");
             return null;
         }
     } catch (e) {
