@@ -29,7 +29,6 @@ export default function CommentItem({ comment, user }) {
   return (
     <View style={styles.commentContainer}>
     <View style={styles.avatar}>
-        {console.log(showuri)}
         {showuri?<Image source={{ uri: showuri }} style={styles.avatar} />:null}
     </View>
     <View style={styles.commentBody}>

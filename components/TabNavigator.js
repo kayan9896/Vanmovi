@@ -7,11 +7,15 @@ import Color from '../components/Color';
 
 const Tab = createBottomTabNavigator();
 
-const getTabBarIcon = (route, focused, color) => {
-    let iconName;
-    let iconSize = focused ? 28 : 24; 
+const ICON_SIZE = {
+    focused: 28,
+    default: 24
+};
 
-    switch (route.name) {
+const getTabBarIcon = ({ name, focused, color }) => {
+    let iconName;
+
+    switch (name) {
         case 'Movies':
             iconName = focused ? 'movie-filter' : 'movie-filter-outline';
             break;
@@ -19,37 +23,42 @@ const getTabBarIcon = (route, focused, color) => {
             iconName = focused ? 'map-marker-radius' : 'map-marker-radius-outline';
             break;
         default:
-            iconName = 'question-mark';
+            iconName = 'alert-circle-outline';  // More general icon for unknown routes
             break;
     }
 
+    const iconSize = focused ? ICON_SIZE.focused : ICON_SIZE.default;
+
     return <MaterialCommunityIcons name={iconName} size={iconSize} color={color} />;
+};
+
+const tabBarOptions = {
+    tabBarActiveTintColor: 'yellow',
+    tabBarInactiveTintColor: 'white',
+    tabBarStyle: {
+        backgroundColor: Color.TabNavigator,
+        height: 65,
+        borderTopWidth: 0,
+        elevation: 10,
+        shadowOpacity: 0.1,
+        paddingBottom: 5,
+    },
+    tabBarLabelStyle: {
+        fontSize: 12,
+        marginBottom: 4,
+    }
 };
 
 const TabNavigator = () => (
     <Tab.Navigator
         screenOptions={({ route }) => ({
-            tabBarIcon: ({ focused, color }) => getTabBarIcon(route, focused, color),
-            tabBarActiveTintColor: 'yellow',
-            tabBarInactiveTintColor: 'white',
-            tabBarStyle: {
-                backgroundColor: Color.TabNavigator,
-                height: 65, 
-                borderTopWidth: 0,
-                elevation: 10,
-                shadowOpacity: 0.1,
-                paddingBottom: 5, 
-            },
-            tabBarLabelStyle: {
-                fontSize: 12,
-                marginBottom: 4,
-            }
+            tabBarIcon: (props) => getTabBarIcon({ ...props, name: route.name }),
+            ...tabBarOptions
         })}
     >
         <Tab.Screen name="Movies" component={Home} />
         <Tab.Screen name="Cinemas" component={Cinema} />
     </Tab.Navigator>
 );
-
 
 export default TabNavigator;

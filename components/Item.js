@@ -19,13 +19,17 @@ export default function Item({ info }) {
 
         <View style={styles.row}>
           <Image source={calendar} style={styles.icon} />
-          <Text style={styles.releaseDate}>Release Year: {info.release_date && new Date(info.release_date).getFullYear()}</Text>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.releaseDate}>Release Year: {info.release_date && new Date(info.release_date).getFullYear()}</Text>
+          </View>
         </View>
 
         <View style={styles.row}>
           <Image source={genre} style={styles.icon} />
-          <Text style={styles.genres} numberOfLines={1} ellipsizeMode="tail">Genres: {info.genres}</Text>
-        </View>
+          <View style={{ flex: 1 }}>
+            <Text style={styles.genres} numberOfLines={1} ellipsizeMode="tail">Genres: {info.genres}</Text>
+          </View>
+      </View>
 
         <View style={styles.row}>
           <Image source={time} style={styles.icon} />
@@ -84,6 +88,7 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    flex: 1,
   },
   icon: {
     width: 16,
