@@ -89,7 +89,7 @@ export default function Home({ navigation }) {
       <HeaderRight title="VanMovie" navigation={navigation} />
       <Text style={styles.title}>What's new!</Text>
       {/* <Button title="NTFY: Movie Recommendation" onPress={handleTestNotification} /> */}
-      <Pressable style={[Style.button, Style.buttonDefaultWidth]} onPress={handleTestNotification}>
+      <Pressable style={[Style.button, Style.buttonDefaultWidth, styles.buttonMargin]} onPress={handleTestNotification}>
         <Text style={Style.buttonText}>NTFY: Movie Recommendation</Text>
       </Pressable>
 
@@ -113,5 +113,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     textAlign: 'center', 
     color: '#333',
+  },
+  buttonMargin: {
+    marginBottom: 10,
   },
 });
