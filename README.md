@@ -86,11 +86,11 @@ Compilation of profile pictures set by the users
 
   - Display of trending movies ensures users are always updated with the cinema world.
   - Detailed view: Users can click on any movie to dive deeper into its synopsis, runtime, and more.
-    ![6048968b61cc9738d677490685fd2fa](https://github.com/kayan9896/Vanmovi/assets/122495175/0efaba97-790c-4762-a685-7c6aaaeea010)
+    ![Vanmovi1](https://github.com/kayan9896/Vanmovi/assets/122495175/a8235203-b17f-4cd6-89f6-d035ecb2351c)
 
   - Reviews: After viewing the movie details, users can drop their opinions and ratings.
   - 🎲 **Random Movie Recommendation**: A unique button on the homepage surprises users by suggesting a random movie genre.
-    ![Vanmovi1](https://github.com/kayan9896/Vanmovi/assets/122495175/a8235203-b17f-4cd6-89f6-d035ecb2351c)
+    ![6048968b61cc9738d677490685fd2fa](https://github.com/kayan9896/Vanmovi/assets/122495175/0efaba97-790c-4762-a685-7c6aaaeea010)
 
 - **Cinemas Page**:
 
