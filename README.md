@@ -86,6 +86,8 @@ Compilation of profile pictures set by the users
 
   - Display of trending movies ensures users are always updated with the cinema world.
   - Detailed view: Users can click on any movie to dive deeper into its synopsis, runtime, and more.
+    ![6048968b61cc9738d677490685fd2fa](https://github.com/kayan9896/Vanmovi/assets/122495175/0efaba97-790c-4762-a685-7c6aaaeea010)
+
   - Reviews: After viewing the movie details, users can drop their opinions and ratings.
   - 🎲 **Random Movie Recommendation**: A unique button on the homepage surprises users by suggesting a random movie genre.
     ![Vanmovi1](https://github.com/kayan9896/Vanmovi/assets/122495175/a8235203-b17f-4cd6-89f6-d035ecb2351c)
@@ -98,6 +100,7 @@ Compilation of profile pictures set by the users
 
 - **Profile Section (Top Right Corner)**:
   - 🖼️ **User Avatar**: Displayed prominently, users can easily change or update their profile picture.
+    ![5dcf83239a77860675f8cf92da62b00](https://github.com/kayan9896/Vanmovi/assets/122495175/aeb6d384-9c5c-4831-a407-86aa61d68c3b)
     - 📷 Camera Integration: Users have the option to take a new photo using the device's camera.
     - 📂 Local Photo Upload: Alternatively, users can choose a photo from their device's local storage for the avatar.
   - 📧 User's registered email is shown for easy reference.
