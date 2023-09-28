@@ -8,7 +8,7 @@ VanMovie App is a user-friendly platform designed for movie enthusiasts offering
 
 ### Team Members & Contributions
 
-**Xiaoyang Zhao**:
+**Loris**:
 
 - 📊 Laid the foundation by providing the framework for the app.
 - 🎬 Integrated the TMDB API and the Cineplex API.
